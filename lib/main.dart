@@ -54,6 +54,7 @@ class RaffleCompanion extends StatelessWidget {
         BlocProvider(create: (context) => InfoCubit()),
       ],
       child: FluentApp(
+        debugShowCheckedModeBanner: false,
         theme: FluentThemeData(
           accentColor: kPrimary,
           brightness: Brightness.dark,
