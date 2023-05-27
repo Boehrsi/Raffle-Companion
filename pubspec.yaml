@@ -1,0 +1,51 @@
+name: raffle_companion
+description: Manage your raffles, the easy way.
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.17.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  bloc_concurrency: ^0.2.1
+  fluent_ui: ^4.6.1
+  flutter_bloc: ^8.1.2
+  json_annotation: ^4.8.1
+  package_info_plus: ^4.0.1
+  path: ^1.8.3
+  path_provider: ^2.0.15
+  sprintf: ^7.0.0
+  url_launcher: ^6.1.11
+  window_manager: ^0.3.2
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  build_runner: ^2.4.4
+  json_serializable: ^6.7.0
+  flutter_lints: ^2.0.1
+  msix: ^3.12.3
+
+flutter:
+  uses-material-design: true
+
+msix_config:
+  display_name: Raffle Companion
+  msix_version: 1.0.0.0
+  logo_path: media/icon.png
+
+scripts:
+  build_runner: flutter pub run build_runner build --delete-conflicting-outputs
+  windows_debug:
+    - flutter clean
+    - dart run scripts/prepare_build.dart
+    - dart run msix:create
+  windows_release:
+    - flutter clean
+    - dart run scripts/prepare_build.dart
+    - dart run msix:create --store true --publisher-display-name Boehrsi --identity-name 9767Boehrsi.RaffleCompanion --publisher CN=B9F51070-DC4D-42E5-B210-A4B163D75379
