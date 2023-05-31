@@ -1,6 +1,7 @@
 const kTextAppName = 'Raffle Companion';
 const kTextAuthor = 'Boehrsi';
 const kTextGitHubLink = 'https://github.com/Boehrsi/Raffle-Companion';
+const kTextAppDirectoryName = 'Raffle Companion';
 
 const kTextOk = 'Ok';
 const kTextCancel = 'Cancel';

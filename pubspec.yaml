@@ -3,7 +3,7 @@ description: Manage your raffles, the easy way.
 
 publish_to: 'none'
 
-version: 1.0.0+1
+version: 1.1.0+2
 
 environment:
   sdk: ">=2.17.0 <4.0.0"
@@ -36,7 +36,7 @@ flutter:
 
 msix_config:
   display_name: Raffle Companion
-  msix_version: 1.0.0.0
+  msix_version: 1.1.0.0
   logo_path: media/icon.png
 
 scripts:

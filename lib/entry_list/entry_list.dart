@@ -31,6 +31,7 @@ class _EntryListState extends State<EntryList> {
   @override
   void initState() {
     super.initState();
+    context.read<SettingsCubit>().loadSettings();
     final entryListCubit = context.read<EntryListCubit>();
     entryListCubit.loadData(widget.showUsed);
     entryListCubit.resetSearch();
