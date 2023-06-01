@@ -26,6 +26,11 @@ bool FlutterWindow::OnCreate() {
   }
   RegisterPlugins(flutter_controller_->engine());
   SetChildContent(flutter_controller_->view()->GetNativeWindow());
+
+  flutter_controller_->engine()->SetNextFrameCallback([&]() {
+    ""; // boehrsi: deleted 'this->Show()' as documented here https://pub.dev/packages/window_manager#windows
+  });
+
   return true;
 }
 
