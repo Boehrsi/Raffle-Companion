@@ -13,6 +13,14 @@ Manage your raffles, the easy way.
 - Modern user interface
 - Completely local, no data is transferred to remote servers
 
+## Supported platforms
+
+Currently only **Windows** builds are provided via the Microsoft Store (see below). If interest is given a dedicated Linux and / or Mac build could be developed.
+If you would like to see a Linux and / or Mac build, please upvote the corresponding ticket.
+
+- [Linux version](https://github.com/Boehrsi/Raffle-Companion/issues/4)
+- [Mac version](https://github.com/Boehrsi/Raffle-Companion/issues/5)
+
 ## Download
 
 Via Microsoft Store at https://apps.microsoft.com/store/detail/raffle-companion/9PM96KWKZJ7M
