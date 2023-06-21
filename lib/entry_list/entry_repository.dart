@@ -20,9 +20,8 @@ class EntryRepository {
 
   EntryRepository._internal();
 
-  List<Entry> getEntryList({bool used = false, String searchTerm = ''}) {
-    return _entryList.where((entry) => entry.used == used && _matchesSearch(searchTerm, entry)).toList();
-  }
+  List<Entry> getEntryList({bool used = false, String searchTerm = ''}) =>
+      _entryList.where((entry) => entry.used == used && _matchesSearch(searchTerm, entry)).toList();
 
   void addEntry(Entry addEntry) {
     _entryList.add(addEntry);
@@ -67,9 +66,11 @@ class EntryRepository {
   }
 
   bool _matchesSearch(String searchTerm, Entry entry) {
+    final sanitizedSearchTerm = searchTerm.toLowerCase();
     return (searchTerm.isEmpty ||
-        entry.name.toLowerCase().contains(searchTerm.toLowerCase()) ||
-        (entry.tag != null && entry.tag!.toLowerCase().contains(searchTerm.toLowerCase())));
+        entry.name.toLowerCase().contains(sanitizedSearchTerm) ||
+        entry.platform.toLowerCase().contains(sanitizedSearchTerm) ||
+        entry.tag?.toLowerCase().contains(sanitizedSearchTerm) == true);
   }
 
   void _sortEntryList() {
