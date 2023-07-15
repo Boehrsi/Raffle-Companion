@@ -2,6 +2,8 @@
 
 Manage your raffles, the easy way.
 
+![Raffle Companion](https://raffle-companion.boehrsi.de/images/content/screenshot_1.png)
+
 ## Features
 
 - Add and manage prices
