@@ -43,7 +43,7 @@
   "mailPresetSettings": "Mail template settings",
   "mailPresetDefault": "Default selection for winner notification",
   "mailPresets": "Mail templates",
-  "presetMustContain": "Must contain placeholders %RAFFLE_NAME%, %RAFFLE_URL%, %PRODUCT% and %KEY%",
+  "presetMustContain": "Must contain placeholders %RAFFLE_NAME%, %RAFFLE_URL%, %PRODUCT% and %KEY%.\nCan contain the optional placeholder %PLATFORM%.",
   "presetRestoreConfirm": "Do you want to restore the default Mail templates? This will overwrite all your changes.",
   "presetDeleteConfirm": "Do you really want to delete the '{}' mail template?",
   "platformSettings": "Platform settings",

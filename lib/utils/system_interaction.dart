@@ -17,6 +17,7 @@ Future<bool> canSend() async {
 Future<void> sendMails(
   List<FormTextBox> mailInputFieldList,
   List<FormTextBox> keyInputFieldList,
+  List<String?> platformList,
   String raffleName,
   String raffleUrl,
   String mailSubject,
@@ -27,8 +28,9 @@ Future<void> sendMails(
     final mail = mailInputFieldList[index].controller.text;
     final game = keyInputFieldList[index].label;
     final key = keyInputFieldList[index].controller.text;
+    final platform = platformList[index];
 
-    final uri = setupSendUrl(mail, mailSubject, mailPreset, raffleName, raffleUrl, game, key);
+    final uri = setupSendUrl(mail, mailSubject, mailPreset, raffleName, raffleUrl, game, key, platform);
     await Future.delayed(Duration(milliseconds: index == 0 ? 0 : 500), () => launchUrl(uri));
   });
 }

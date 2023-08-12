@@ -27,6 +27,7 @@ class _NotifyWinnersState extends State<NotifyWinners> {
   final _formKey = GlobalKey<FormState>();
   final _mailInputFieldList = <FormTextBox>[];
   final _keyInputFieldList = <FormTextBox>[];
+  final _platformList = <String>[];
   final _nameInputField = FormTextBox(
     label: LocaleKeys.winnerName.tr(),
     validator: validatorNotEmpty,
@@ -48,7 +49,7 @@ class _NotifyWinnersState extends State<NotifyWinners> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     _setupEntryForm();
-    _setupPlatformBox();
+    _setupMailPresetBox();
   }
 
   @override
@@ -150,11 +151,12 @@ class _NotifyWinnersState extends State<NotifyWinners> {
           label: entry.name,
           validator: validatorNotEmpty,
         )..controller.text = entry.key ?? '');
+        _platformList.add(entry.platform);
       }
     }
   }
 
-  void _setupPlatformBox() {
+  void _setupMailPresetBox() {
     final state = context.read<SettingsCubit>().state;
     if (state is SettingsSuccess) {
       final mailPresetNameList = state.mailPresetList.map((mailPreset) => mailPreset.name);
@@ -177,7 +179,7 @@ class _NotifyWinnersState extends State<NotifyWinners> {
       final mailSubject = _subjectInputField.controller.text;
       final mailPresetSelection = _mailPresetComboBox.controller.value;
       final mailPreset = mailPresetList.firstWhere((element) => element.name == mailPresetSelection);
-      await sendMails(_mailInputFieldList, _keyInputFieldList, raffleName, raffleUrl, mailSubject, mailPreset.text);
+      await sendMails(_mailInputFieldList, _keyInputFieldList, _platformList, raffleName, raffleUrl, mailSubject, mailPreset.text);
     }
   }
 

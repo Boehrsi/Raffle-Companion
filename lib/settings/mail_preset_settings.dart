@@ -29,7 +29,7 @@ class _MailPresetSettingsState extends State<MailPresetSettings> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _setupPlatformBox();
+    _setupMailPresetBox();
   }
 
   @override
@@ -102,7 +102,7 @@ class _MailPresetSettingsState extends State<MailPresetSettings> {
     );
   }
 
-  void _setupPlatformBox() {
+  void _setupMailPresetBox() {
     _mailPresetComboBox = FormComboBox(onChanged: (value) {
       if (value != null) _changeDefaultSelection(value);
     });

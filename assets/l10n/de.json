@@ -43,7 +43,7 @@
   "mailPresetSettings": "Mail-Vorlagen Einstellungen",
   "mailPresetDefault": "Standardauswahl für Gewinnbenachrichtigung",
   "mailPresets": "Mail-Vorlagen",
-  "presetMustContain": "Muss die Platzhalter %RAFFLE_NAME%, %RAFFLE_URL%, %PRODUCT% und %KEY% enthalten",
+  "presetMustContain": "Muss die Platzhalter %RAFFLE_NAME%, %RAFFLE_URL%, %PRODUCT% und %KEY% enthalten.\nKann den optionalen Platzhalter %PLATFORM% enthalten.",
   "presetRestoreConfirm": "Möchten Sie die Standard Mail-Vorlagen wiederherstellen? Dadurch werden alle Ihre Änderungen überschrieben.",
   "presetDeleteConfirm": "Möchten Sie die Mail-Vorlage '{}' wirklich löschen?",
   "platformSettings": "Plattform Einstellungen",
