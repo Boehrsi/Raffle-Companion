@@ -1,12 +1,12 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sprintf/sprintf.dart';
 
+import '../l10n/locale_keys.g.dart';
 import '../settings/settings_cubit.dart';
 import '../settings/settings_state.dart';
 import '../styles/text.dart';
 import '../types/entry.dart';
-import '../utils/l10n.dart';
 import '../widgets/dialogs.dart';
 import '../widgets/input.dart';
 import '../widgets/layout.dart';
@@ -31,7 +31,6 @@ class _EntryListState extends State<EntryList> {
   @override
   void initState() {
     super.initState();
-    context.read<SettingsCubit>().loadSettings();
     final entryListCubit = context.read<EntryListCubit>();
     entryListCubit.loadData(widget.showUsed);
     entryListCubit.resetSearch();
@@ -45,39 +44,32 @@ class _EntryListState extends State<EntryList> {
         final entriesSelected = state.selectedList.isNotEmpty;
         return ScaffoldPage(
           header: PageHeader(
-            title: Text(showUsed ? kTextEntriesUsed : kTextEntries),
+            title: Text(showUsed ? LocaleKeys.entriesUsed.tr() : LocaleKeys.entriesAvailable.tr()),
             commandBar: CommandBar(
               primaryItems: [
                 if (!showUsed) ...[
                   CommandBarButton(
                     icon: const Icon(FluentIcons.check_mark),
-                    label: const Text(kTextMarkUsed),
+                    label: Text(LocaleKeys.markUsed.tr()),
                     onPressed: entriesSelected ? _markUsed : null,
                   ),
                   CommandBarButton(
                     icon: const Icon(FluentIcons.send),
-                    label: const Text(kTextWinnerNotify),
+                    label: Text(LocaleKeys.winnerNotify.tr()),
                     onPressed: entriesSelected ? _notifyWinners : null,
                   ),
-                  CommandBarButton(
-                    icon: const Icon(FluentIcons.delete),
-                    label: const Text(kTextDelete),
-                    onPressed: entriesSelected ? _showConfirmDeleteDialog : null,
-                  ),
                   const CommandBarSeparator(),
-                ],
-                if (!showUsed) ...[
                   CommandBarButton(
                     icon: const Icon(FluentIcons.add),
-                    label: const Text(kTextAdd),
+                    label: Text(LocaleKeys.add.tr()),
                     onPressed: _changeEntryDialog,
                   ),
                   CommandBarButton(
-                    icon: const Icon(FluentIcons.copy),
-                    label: const Text(kTextEntriesExport),
-                    onPressed: () => _copyListDialog(state.entryList),
+                    icon: const Icon(FluentIcons.delete),
+                    label: Text(LocaleKeys.delete.tr()),
+                    onPressed: entriesSelected ? _showConfirmDeleteDialog : null,
                   ),
-                ]
+                ],
               ],
             ),
           ),
@@ -88,28 +80,45 @@ class _EntryListState extends State<EntryList> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: ConstraintWidthInput(
-                        child: TextFormBox(
-                          controller: searchController,
-                          onChanged: (term) => _search(term),
-                          placeholder: kTextEntriesSearch,
-                          prefix: const Padding(
-                            padding: EdgeInsets.only(left: 8.0),
-                            child: Icon(FluentIcons.search),
-                          ),
-                          suffix: IconButton(
-                            icon: const Icon(FluentIcons.clear),
-                            onPressed: () {
-                              searchController.clear();
-                              _search("");
-                            },
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: ConstraintWidthInput(
+                            child: TextFormBox(
+                              controller: searchController,
+                              onChanged: (term) => _search(term),
+                              placeholder: LocaleKeys.entriesSearch.tr(),
+                              prefix: const Padding(
+                                padding: EdgeInsets.only(left: 8.0),
+                                child: Icon(FluentIcons.search),
+                              ),
+                              suffix: IconButton(
+                                icon: const Icon(FluentIcons.clear),
+                                onPressed: () {
+                                  searchController.clear();
+                                  _search("");
+                                },
+                              ),
+                            ),
                           ),
                         ),
-                      ),
+                        Button(
+                          child: Row(
+                            children: [
+                              const Padding(
+                                padding: EdgeInsets.only(right: 8.0),
+                                child: Icon(FluentIcons.copy),
+                              ),
+                              Text(LocaleKeys.entriesExport.tr()),
+                            ],
+                          ),
+                          onPressed: () => _copyListDialog(state.entryList),
+                        )
+                      ],
                     ),
-                    if (showUsed) const LargeLabel(label: kTextEntries),
+                    if (showUsed) LargeLabel(label: LocaleKeys.entries.tr()),
                     if (!showUsed)
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 16.0),
@@ -118,16 +127,17 @@ class _EntryListState extends State<EntryList> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                sprintf(kTextEntriesSelected, [state.selectedList.length]),
+                                LocaleKeys.entriesSelected.tr(args: [state.selectedList.length.toString()]),
                                 style: context.titleLargeStyle,
                               ),
                               Button(
                                 onPressed: entriesSelected ? _unselectAllEntries : null,
-                                child: const Text(kTextUnselect),
+                                child: Text(LocaleKeys.unselect.tr()),
                               ),
                             ],
                           ),
-                          content: Text(state.selectedList.isEmpty ? kTextEntriesNothingSelect : state.selectedList.map((e) => e.name).join(", ")),
+                          content: Text(
+                              state.selectedList.isEmpty ? LocaleKeys.entriesNothingSelect.tr() : state.selectedList.map((e) => e.name).join(", ")),
                         ),
                       ),
                     if (state.entryList.isNotEmpty) ...[
@@ -140,13 +150,13 @@ class _EntryListState extends State<EntryList> {
                             final subtitle = _buildSubtitle(entry);
                             return showUsed
                                 ? Tooltip(
-                                    message: "$kTextKey: ${entry.key}",
+                                    message: "${LocaleKeys.key.tr()}: ${entry.key}",
                                     displayHorizontally: true,
                                     child: ListTile(
                                       title: Text(entry.name),
                                       subtitle: Text(subtitle),
                                       trailing: Button(
-                                        child: const Text(kTextMarkNotUsed),
+                                        child: Text(LocaleKeys.markNotUsed.tr()),
                                         onPressed: () => _showConfirmMarkNotUsedDialog(entry),
                                       ),
                                     ),
@@ -160,7 +170,7 @@ class _EntryListState extends State<EntryList> {
                                         Padding(
                                           padding: const EdgeInsets.only(right: 8.0),
                                           child: Button(
-                                            child: const Text(kTextEdit),
+                                            child: Text(LocaleKeys.edit.tr()),
                                             onPressed: () => _changeEntryDialog(entry),
                                           ),
                                         ),
@@ -175,7 +185,7 @@ class _EntryListState extends State<EntryList> {
                         ),
                       ),
                     ],
-                    if (state.entryList.isEmpty) const Center(child: Text(kTextEntriesEmpty)),
+                    if (state.entryList.isEmpty) Center(child: Text(LocaleKeys.entriesEmpty.tr())),
                   ],
                 ),
               ),
@@ -189,9 +199,9 @@ class _EntryListState extends State<EntryList> {
   }
 
   String _buildSubtitle(Entry entry) {
-    var text = "$kTextPlatform: ${entry.platform}";
+    var text = "${LocaleKeys.platform.tr()}: ${entry.platform}";
     if (entry.tag != null) {
-      text += " | $kTextTag: ${entry.tag}";
+      text += " | ${LocaleKeys.tag.tr()}: ${entry.tag}";
     }
     return text;
   }
@@ -228,12 +238,16 @@ class _EntryListState extends State<EntryList> {
         ),
       );
     } else {
-      showErrorDialog(context: context, error: kTextErrorNoPreset);
+      showErrorDialog(context: context, error: LocaleKeys.errorNoPreset.tr());
     }
   }
 
   void _showConfirmMarkNotUsedDialog(Entry entry) {
-    showConfirmDialog(context: context, title: kTextMarkNotUsed, content: kTextEntriesMarkNotUsedConfirm, positiveText: kTextMarkNotUsed)
+    showConfirmDialog(
+            context: context,
+            title: LocaleKeys.markNotUsed.tr(),
+            content: LocaleKeys.entriesMarkNotUsedConfirm.tr(),
+            positiveText: LocaleKeys.markNotUsed.tr())
         .then((bool? value) {
       if (value != null && value) {
         _markNotUsed(entry);
@@ -242,7 +256,9 @@ class _EntryListState extends State<EntryList> {
   }
 
   void _showConfirmDeleteDialog() {
-    showConfirmDialog(context: context, title: kTextDelete, content: kTextEntriesDeleteConfirm, positiveText: kTextDelete).then((bool? value) {
+    showConfirmDialog(
+            context: context, title: LocaleKeys.delete.tr(), content: LocaleKeys.entriesDeleteConfirm.tr(), positiveText: LocaleKeys.delete.tr())
+        .then((bool? value) {
       if (value != null && value) {
         _delete();
       }
@@ -258,14 +274,14 @@ class _EntryListState extends State<EntryList> {
       context: context,
       builder: (BuildContext context) {
         return ContentDialog(
-          title: const Text(kTextEntriesExport),
-          content: Text(sprintf(kTextEntriesCopyHint, [count])),
+          title: Text(LocaleKeys.entriesExport.tr()),
+          content: Text(LocaleKeys.entriesCopyHint.tr(args: [count.toString()])),
           actions: <Widget>[
             Button(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text(kTextCancel),
+              child: Text(LocaleKeys.cancel.tr()),
             ),
             Button(
               onPressed: () {
@@ -273,7 +289,7 @@ class _EntryListState extends State<EntryList> {
                 _showCopySuccessSnackbar(context);
                 Navigator.of(context).pop();
               },
-              child: const Text(kTextEntriesCopyHtml),
+              child: Text(LocaleKeys.entriesCopyHtml.tr()),
             ),
             Button(
               onPressed: () {
@@ -281,7 +297,7 @@ class _EntryListState extends State<EntryList> {
                 _showCopySuccessSnackbar(context);
                 Navigator.of(context).pop();
               },
-              child: const Text(kTextEntriesCopyMarkdown),
+              child: Text(LocaleKeys.entriesCopyMarkdown.tr()),
             ),
           ],
         );
@@ -292,8 +308,9 @@ class _EntryListState extends State<EntryList> {
   void _showCopySuccessSnackbar(BuildContext context) {
     showSnackbar(
       context,
-      const Snackbar(
-        content: Text(kTextEntriesClipboard),
+      InfoBar(
+        title: Text(LocaleKeys.copied.tr()),
+        content: Text(LocaleKeys.entriesClipboard.tr()),
       ),
     );
   }

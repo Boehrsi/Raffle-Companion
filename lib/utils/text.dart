@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:sprintf/sprintf.dart';
 
-import 'l10n.dart';
+import '../l10n/l10n.dart';
+import '../l10n/locale_keys.g.dart';
 
 Uri setupSendUrl(String mail, String subject, String mailPresetText, String raffleName, String raffleUrl, String game, String key) {
   final body = _setupMailText(mailPresetText, raffleName, raffleUrl, game, key);
@@ -19,4 +21,4 @@ String _setupMailText(String mailPreset, String raffleName, String raffleUrl, St
       .replaceAll('%KEY%', key);
 }
 
-String? validatorNotEmpty(value) => (value == null || value.isEmpty) ? kTextErrorNotEmpty : null;
+String? validatorNotEmpty(value) => (value == null || value.isEmpty) ? LocaleKeys.errorNotEmpty.tr() : null;

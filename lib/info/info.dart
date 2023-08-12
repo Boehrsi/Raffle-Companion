@@ -1,9 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../l10n/locale_keys.g.dart';
 import '../utils/colors.dart';
-import '../utils/l10n.dart';
+import '../l10n/l10n.dart';
 import '../widgets/dialogs.dart';
 import '../widgets/layout.dart';
 import '../widgets/text.dart';
@@ -35,8 +37,8 @@ class _InfoState extends State<Info> {
     }, builder: (context, state) {
       if (state is InfoSuccess) {
         return ScaffoldPage(
-          header: const PageHeader(
-            title: Text(kTextInfoTitle),
+          header: PageHeader(
+            title: Text(LocaleKeys.infoTitle.tr()),
           ),
           content: SingleChildScrollView(
             child: Center(
@@ -50,7 +52,7 @@ class _InfoState extends State<Info> {
                         text: TextSpan(
                           style: DefaultTextStyle.of(context).style,
                           children: <TextSpan>[
-                            const TextSpan(text: '$kTextInfoVersion ', style: TextStyle(fontWeight: FontWeight.bold)),
+                            TextSpan(text: '${LocaleKeys.infoVersion.tr()} ', style: const TextStyle(fontWeight: FontWeight.bold)),
                             TextSpan(text: state.version),
                           ],
                         ),
@@ -58,9 +60,9 @@ class _InfoState extends State<Info> {
                       RichText(
                         text: TextSpan(
                           style: DefaultTextStyle.of(context).style,
-                          children: const <TextSpan>[
-                            TextSpan(text: '$kTextDevelopedBy ', style: TextStyle(fontWeight: FontWeight.bold)),
-                            TextSpan(text: kTextAuthor),
+                          children: <TextSpan>[
+                            TextSpan(text: '${LocaleKeys.developedBy.tr()} ', style: const TextStyle(fontWeight: FontWeight.bold)),
+                            const TextSpan(text: kTextAuthor),
                           ],
                         ),
                       ),
@@ -68,7 +70,7 @@ class _InfoState extends State<Info> {
                         text: TextSpan(
                           style: DefaultTextStyle.of(context).style,
                           children: <TextSpan>[
-                            const TextSpan(text: '$kTextInfoGitHub ', style: TextStyle(fontWeight: FontWeight.bold)),
+                            TextSpan(text: '${LocaleKeys.infoGitHub.tr()} ', style: const TextStyle(fontWeight: FontWeight.bold)),
                             TextSpan(
                               text: kTextGitHubLink,
                               style: TextStyle(
@@ -89,17 +91,17 @@ class _InfoState extends State<Info> {
                           style: FluentTheme.of(context).dividerTheme.merge(const DividerThemeData(horizontalMargin: EdgeInsets.zero)),
                         ),
                       ),
-                      const LargeLabel(label: kTextInfoFiles),
+                      LargeLabel(label: LocaleKeys.infoFiles.tr()),
                       Button(
                         onPressed: _openFiles,
-                        child: const Text(kTextInfoOpenFiles),
+                        child: Text(LocaleKeys.infoOpenFiles.tr()),
                       ),
-                      const LargeLabel(label: kTextInfoFeedback),
+                      LargeLabel(label: LocaleKeys.infoFeedback.tr()),
                       Button(
                         onPressed: _sendFeedback,
-                        child: const Text(kTextInfoSendFeedback),
+                        child: Text(LocaleKeys.infoSendFeedback.tr()),
                       ),
-                      const LargeLabel(label: kTextInfoLog),
+                      LargeLabel(label: LocaleKeys.infoLog.tr()),
                       TextFormBox(
                         controller: logController,
                         readOnly: true,
@@ -122,7 +124,7 @@ class _InfoState extends State<Info> {
   void _openFiles() {
     context.read<InfoCubit>().openFiles().then((result) {
       if (!result) {
-        showInfoDialog(context: context, title: kTextErrorTitle, content: kTextErrorNoFileExplorer);
+        showInfoDialog(context: context, title: LocaleKeys.errorTitle.tr(), content: LocaleKeys.errorNoFileExplorer.tr());
       }
     });
   }
@@ -130,7 +132,7 @@ class _InfoState extends State<Info> {
   void _sendFeedback() {
     context.read<InfoCubit>().sendFeedback().then((result) {
       if (!result) {
-        showInfoDialog(context: context, title: kTextErrorTitle, content: kTextErrorNoMailApp);
+        showInfoDialog(context: context, title: LocaleKeys.errorTitle.tr(), content: LocaleKeys.errorNoMailApp.tr());
       }
     });
   }
@@ -138,7 +140,7 @@ class _InfoState extends State<Info> {
   void _openGitHub() {
     context.read<InfoCubit>().openGithub().then((result) {
       if (!result) {
-        showInfoDialog(context: context, title: kTextErrorTitle, content: kTextErrorNoBrowser);
+        showInfoDialog(context: context, title: LocaleKeys.errorTitle.tr(), content: LocaleKeys.errorNoBrowser.tr());
       }
     });
   }

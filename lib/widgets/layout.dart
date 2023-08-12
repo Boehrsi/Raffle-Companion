@@ -1,4 +1,6 @@
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:raffle_companion/root/root_cubit.dart';
 import 'package:window_manager/window_manager.dart';
 
 import '../styles/text.dart';
@@ -43,13 +45,22 @@ class AppBarActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SizedBox(
+    return SizedBox(
       width: 138,
       height: 50,
       child: WindowCaption(
-        brightness: Brightness.dark,
+        brightness: context.watch<RootCubit>().theme.value,
         backgroundColor: Colors.transparent,
       ),
     );
+  }
+}
+
+class LayoutSpacer extends StatelessWidget {
+  const LayoutSpacer({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(child: Container());
   }
 }

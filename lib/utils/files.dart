@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
-import 'l10n.dart';
+import '../l10n/l10n.dart';
 
 enum RaffleDirectory {
   files(segments: [_folderFiles]),

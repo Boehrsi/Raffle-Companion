@@ -1,13 +1,15 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../entry_list/entry_list_cubit.dart';
 import '../entry_list/entry_list_state.dart';
+import '../l10n/l10n.dart';
+import '../l10n/locale_keys.g.dart';
 import '../settings/settings_cubit.dart';
 import '../settings/settings_state.dart';
 import '../types/entry.dart';
 import '../types/mail_preset.dart';
-import '../utils/l10n.dart';
 import '../utils/system_interaction.dart';
 import '../utils/text.dart';
 import '../widgets/input.dart';
@@ -26,15 +28,15 @@ class _NotifyWinnersState extends State<NotifyWinners> {
   final _mailInputFieldList = <FormTextBox>[];
   final _keyInputFieldList = <FormTextBox>[];
   final _nameInputField = FormTextBox(
-    label: kTextWinnerName,
+    label: LocaleKeys.winnerName.tr(),
     validator: validatorNotEmpty,
   );
   final _urlInputField = FormTextBox(
-    label: kTextWinnerUrl,
+    label: LocaleKeys.winnerUrl.tr(),
     validator: validatorNotEmpty,
   );
   final _subjectInputField = FormTextBox(
-    label: kTextWinnerSubject,
+    label: LocaleKeys.winnerSubject.tr(),
     validator: validatorNotEmpty,
   );
   final _mailPresetComboBox = FormComboBox();
@@ -43,34 +45,15 @@ class _NotifyWinnersState extends State<NotifyWinners> {
   var _infoBarSeverity = InfoBarSeverity.info;
 
   @override
-  void initState() {
-    super.initState();
-    final entryListCubit = context.read<EntryListCubit>();
-    context.read<SettingsCubit>().loadSettings();
-    if (entryListCubit.state is EntryListSuccess) {
-      final selectedList = (entryListCubit.state as EntryListSuccess).selectedList;
-      for (Entry entry in selectedList) {
-        _mailInputFieldList.add(FormTextBox(
-          label: kTextMail,
-          validator: validatorNotEmpty,
-        ));
-        _keyInputFieldList.add(FormTextBox(
-          label: entry.name,
-          validator: validatorNotEmpty,
-        )..controller.text = entry.key ?? '');
-      }
-    }
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _setupEntryForm();
+    _setupPlatformBox();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<SettingsCubit, SettingsState>(
-      listener: (BuildContext context, state) {
-        if (state is SettingsSuccess) {
-          final mailPresetNameList = state.mailPresetList.map((mailPreset) => mailPreset.name);
-          _mailPresetComboBox.controller.setup(state.settings.defaultMailPreset, mailPresetNameList);
-        }
-      },
+    return BlocBuilder<SettingsCubit, SettingsState>(
       builder: (BuildContext context, state) {
         if (state is SettingsSuccess && state.mailPresetList.isNotEmpty) {
           return NavigationView(
@@ -80,17 +63,17 @@ class _NotifyWinnersState extends State<NotifyWinners> {
             ),
             content: ScaffoldPage(
               header: PageHeader(
-                title: const Text(kTextWinnerNotify),
+                title: Text(LocaleKeys.winnerNotify.tr()),
                 commandBar: CommandBar(
                   primaryItems: [
                     CommandBarButton(
                       icon: const Icon(FluentIcons.check_mark),
-                      label: const Text(kTextMarkUsed),
+                      label: Text(LocaleKeys.markUsed.tr()),
                       onPressed: _markUsed,
                     ),
                     CommandBarButton(
                       icon: const Icon(FluentIcons.send),
-                      label: const Text(kTextWinnerSendMail),
+                      label: Text(LocaleKeys.winnerSendMail.tr()),
                       onPressed: () => _sendMails(state.mailPresetList),
                     ),
                   ],
@@ -110,20 +93,20 @@ class _NotifyWinnersState extends State<NotifyWinners> {
                           children: [
                             if (_infoBarText.isNotEmpty)
                               InfoBar(
-                                title: Text(_infoBarSeverity == InfoBarSeverity.error ? kTextError : kTextInfo),
+                                title: Text(_infoBarSeverity == InfoBarSeverity.error ? LocaleKeys.error.tr() : LocaleKeys.info.tr()),
                                 content: Text(_infoBarText),
                                 severity: _infoBarSeverity,
                                 onClose: () {
                                   setState(() => _infoBarText = '');
                                 },
                               ),
-                            const LargeLabel(label: kTextWinnerSettings),
+                            LargeLabel(label: LocaleKeys.winnerSettings.tr()),
                             _nameInputField,
                             _urlInputField,
                             _subjectInputField,
-                            InfoLabel(label: kTextWinnerPreset),
+                            InfoLabel(label: LocaleKeys.winnerPreset.tr()),
                             ConstraintWidthInput(child: _mailPresetComboBox),
-                            const LargeLabel(label: kTextWinnerList),
+                            LargeLabel(label: LocaleKeys.winnerList.tr()),
                             ListView.builder(
                               shrinkWrap: true,
                               primary: false,
@@ -147,7 +130,7 @@ class _NotifyWinnersState extends State<NotifyWinners> {
             ),
           );
         } else if (state is SettingsSuccess && state.mailPresetList.isEmpty) {
-          return const Center(child: Text(kTextErrorWinnerView));
+          return Center(child: Text(LocaleKeys.errorView.tr()));
         } else {
           return const Center(child: ProgressRing());
         }
@@ -155,11 +138,35 @@ class _NotifyWinnersState extends State<NotifyWinners> {
     );
   }
 
+  void _setupEntryForm() {
+    final state = context.read<EntryListCubit>().state;
+    if (state is EntryListSuccess) {
+      for (Entry entry in state.selectedList) {
+        _mailInputFieldList.add(FormTextBox(
+          label: LocaleKeys.mail.tr(),
+          validator: validatorNotEmpty,
+        ));
+        _keyInputFieldList.add(FormTextBox(
+          label: entry.name,
+          validator: validatorNotEmpty,
+        )..controller.text = entry.key ?? '');
+      }
+    }
+  }
+
+  void _setupPlatformBox() {
+    final state = context.read<SettingsCubit>().state;
+    if (state is SettingsSuccess) {
+      final mailPresetNameList = state.mailPresetList.map((mailPreset) => mailPreset.name);
+      _mailPresetComboBox.controller.setup(state.settings.defaultMailPreset, mailPresetNameList);
+    }
+  }
+
   void _sendMails(Iterable<MailPreset> mailPresetList) async {
     if (_formKey.currentState != null && _formKey.currentState!.validate()) {
       if (!await canSend()) {
         setState(() {
-          _infoBarText = kTextErrorNoMailApp;
+          _infoBarText = LocaleKeys.errorNoMailApp.tr();
           _infoBarSeverity = InfoBarSeverity.error;
         });
         return;
@@ -177,7 +184,7 @@ class _NotifyWinnersState extends State<NotifyWinners> {
   void _markUsed() {
     context.read<EntryListCubit>().markUsed();
     setState(() {
-      _infoBarText = kTextEntriesMarkedUsed;
+      _infoBarText = LocaleKeys.entriesMarkedUsed.tr();
       _infoBarSeverity = InfoBarSeverity.info;
     });
   }

@@ -7,11 +7,13 @@ part of 'config.dart';
 // **************************************************************************
 
 Config _$ConfigFromJson(Map<String, dynamic> json) => Config(
-      (json['width'] as num).toDouble(),
-      (json['height'] as num).toDouble(),
+      width: (json['width'] as num).toDouble(),
+      height: (json['height'] as num).toDouble(),
+      theme: json['theme'] as String?,
     );
 
 Map<String, dynamic> _$ConfigToJson(Config instance) => <String, dynamic>{
       'width': instance.width,
       'height': instance.height,
+      'theme': instance.theme,
     };

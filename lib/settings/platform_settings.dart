@@ -1,9 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sprintf/sprintf.dart';
 
+import '../l10n/locale_keys.g.dart';
 import '../types/type_definitions.dart';
-import '../utils/l10n.dart';
 import '../utils/text.dart';
 import '../widgets/dialogs.dart';
 import '../widgets/input.dart';
@@ -21,94 +21,99 @@ class PlatformSettings extends StatefulWidget {
 
 class _PlatformSettingsState extends State<PlatformSettings> {
   final _formKey = GlobalKey<FormState>();
-  final _nameInputField = FormTextBox(label: kTextPlatform, validator: validatorNotEmpty);
+  final _nameInputField = FormTextBox(label: LocaleKeys.platform.tr(), validator: validatorNotEmpty);
   late FormComboBox _platformComboBox;
 
   @override
-  void initState() {
-    super.initState();
-    context.read<SettingsCubit>().loadSettings();
-    _platformComboBox = FormComboBox(onChanged: (value) {
-      if (value != null) _changeDefaultSelection(value);
-    });
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _setupPlatformBox();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<SettingsCubit, SettingsState>(listener: (BuildContext context, state) {
-      if (state is SettingsSuccess) {
-        final items = _getPlatformNameList(state);
-        _platformComboBox.controller.setup(state.settings.defaultPlatform, items);
-      }
-    }, builder: (BuildContext context, state) {
-      if (state is SettingsSuccess) {
-        return ScaffoldPage(
-          header: PageHeader(
-            title: const Text(kTextPlatformSettings),
-            commandBar: CommandBar(
-              overflowBehavior: CommandBarOverflowBehavior.noWrap,
-              primaryItems: [
-                CommandBarButton(
-                  icon: const Icon(FluentIcons.add),
-                  label: const Text(kTextAdd),
-                  onPressed: _changePlatformDialog,
-                ),
-                CommandBarButton(
-                  icon: const Icon(FluentIcons.reset),
-                  label: const Text(kTextRestoreDefaults),
-                  onPressed: _showConfirmRestoreDialog,
-                ),
-              ],
+    return BlocBuilder<SettingsCubit, SettingsState>(
+      builder: (BuildContext context, state) {
+        if (state is SettingsSuccess) {
+          return ScaffoldPage(
+            header: PageHeader(
+              title: Text(LocaleKeys.platformSettings.tr()),
+              commandBar: CommandBar(
+                overflowBehavior: CommandBarOverflowBehavior.noWrap,
+                primaryItems: [
+                  CommandBarButton(
+                    icon: const Icon(FluentIcons.add),
+                    label: Text(LocaleKeys.add.tr()),
+                    onPressed: _changePlatformDialog,
+                  ),
+                  CommandBarButton(
+                    icon: const Icon(FluentIcons.reset),
+                    label: Text(LocaleKeys.restoreDefaults.tr()),
+                    onPressed: _showConfirmRestoreDialog,
+                  ),
+                ],
+              ),
             ),
-          ),
-          content: Center(
-            child: ConstraintWidthContainer(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    if (state.platformList.isNotEmpty) ...[
-                      const LargeLabel(label: kTextPlatformDefault),
-                      ConstraintWidthInput(child: _platformComboBox),
-                      const LargeLabel(label: kTextPlatformList),
-                      Expanded(
-                        child: ListView.separated(
-                          itemCount: state.platformList.length,
-                          itemBuilder: (context, index) {
-                            return PlatformTile(
-                              name: state.platformList[index].name,
-                              onChange: _changePlatformDialog,
-                              onDelete: (name) => _deletePlatformDialog(name, state.platformList.length),
-                            );
-                          },
-                          separatorBuilder: (context, index) {
-                            if (index < state.platformList.length) {
-                              return const Divider();
-                            } else {
-                              return Container();
-                            }
-                          },
+            content: Center(
+              child: ConstraintWidthContainer(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (state.platformList.isNotEmpty) ...[
+                        LargeLabel(label: LocaleKeys.platformDefault.tr()),
+                        ConstraintWidthInput(child: _platformComboBox),
+                        LargeLabel(label: LocaleKeys.platforms.tr()),
+                        Expanded(
+                          child: ListView.separated(
+                            itemCount: state.platformList.length,
+                            itemBuilder: (context, index) {
+                              return PlatformTile(
+                                name: state.platformList[index].name,
+                                onChange: _changePlatformDialog,
+                                onDelete: (name) => _deletePlatformDialog(name, state.platformList.length),
+                              );
+                            },
+                            separatorBuilder: (context, index) {
+                              if (index < state.platformList.length) {
+                                return const Divider();
+                              } else {
+                                return Container();
+                              }
+                            },
+                          ),
                         ),
-                      ),
+                      ],
+                      if (state.platformList.isEmpty) Center(child: Text(LocaleKeys.entriesEmpty.tr())),
                     ],
-                    if (state.platformList.isEmpty) const Center(child: Text(kTextEntriesEmpty)),
-                  ],
+                  ),
                 ),
               ),
             ),
-          ),
-        );
-      } else {
-        return const Center(child: ProgressRing());
-      }
-    });
+          );
+        } else {
+          return const Center(child: ProgressRing());
+        }
+      },
+    );
   }
 
-  Iterable<String> _getPlatformNameList(SettingsSuccess state) => state.platformList.map((value) => value.name);
+  void _setupPlatformBox() {
+    _platformComboBox = FormComboBox(onChanged: (value) {
+      if (value != null) _changeDefaultSelection(value);
+    });
+    final state = context.read<SettingsCubit>().state;
+    if (state is SettingsSuccess) {
+      final items = state.platformList.map((value) => value.name);
+      _platformComboBox.controller.setup(state.settings.defaultPlatform, items);
+    }
+  }
 
   void _showConfirmRestoreDialog() {
-    showConfirmDialog(context: context, title: kTextRestore, content: kTextPlatformRestoreConfirm, positiveText: kTextRestore).then((bool? value) {
+    showConfirmDialog(
+            context: context, title: LocaleKeys.restore.tr(), content: LocaleKeys.platformRestoreConfirm.tr(), positiveText: LocaleKeys.restore.tr())
+        .then((bool? value) {
       if (value != null && value) {
         _restoreDefaults();
       }
@@ -126,15 +131,15 @@ class _PlatformSettingsState extends State<PlatformSettings> {
       builder: (context) {
         return FormDialog(
             formKey: _formKey,
-            title: isChange ? kTextEdit : kTextAdd,
+            title: isChange ? LocaleKeys.edit.tr() : LocaleKeys.add.tr(),
             actions: [
               Button(
                 onPressed: () => Navigator.pop(context),
-                child: const Text(kTextCancel),
+                child: Text(LocaleKeys.cancel.tr()),
               ),
               Button(
                 onPressed: () => _changePlatform(name),
-                child: Text(isChange ? kTextEdit : kTextAdd),
+                child: Text(isChange ? LocaleKeys.edit.tr() : LocaleKeys.add.tr()),
               ),
             ],
             child: _nameInputField);
@@ -144,13 +149,13 @@ class _PlatformSettingsState extends State<PlatformSettings> {
 
   void _deletePlatformDialog(String name, int entryCount) {
     if (entryCount <= 1) {
-      showInfoDialog(context: context, title: kTextErrorTitle, content: kTextSettingsCantDeleteLastEntry);
+      showInfoDialog(context: context, title: LocaleKeys.errorTitle.tr(), content: LocaleKeys.settingsCantDeleteLastEntry.tr());
     } else {
       showConfirmDialog(
         context: context,
-        title: kTextDelete,
-        content: sprintf(kTextPlatformDeleteConfirm, [name]),
-        positiveText: kTextDelete,
+        title: LocaleKeys.delete.tr(),
+        content: LocaleKeys.platformDeleteConfirm.tr(args: [name]),
+        positiveText: LocaleKeys.delete.tr(),
       ).then((shouldDelete) {
         if (shouldDelete == true) {
           _deletePlatform(name);
@@ -191,12 +196,12 @@ class PlatformTile extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(right: 8.0),
             child: Button(
-              child: const Text(kTextEdit),
+              child: Text(LocaleKeys.edit.tr()),
               onPressed: () => onChange(name),
             ),
           ),
           Button(
-            child: const Text(kTextDelete),
+            child: Text(LocaleKeys.delete.tr()),
             onPressed: () => onDelete(name),
           ),
         ],

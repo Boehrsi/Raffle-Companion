@@ -12,6 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
   bloc_concurrency: ^0.2.1
+  easy_localization: ^3.0.2
   fluent_ui: ^4.7.1
   flutter_bloc: ^8.1.2
   json_annotation: ^4.8.1
@@ -21,7 +22,6 @@ dependencies:
   sprintf: ^7.0.0
   url_launcher: ^6.1.12
   window_manager: ^0.3.5
-
 
 dev_dependencies:
   flutter_test:
@@ -33,6 +33,8 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/l10n/
 
 msix_config:
   display_name: Raffle Companion
@@ -40,7 +42,8 @@ msix_config:
   logo_path: media/icon.png
 
 scripts:
-  build_runner: flutter pub run build_runner build --delete-conflicting-outputs
+  build_runner: dart run build_runner build --delete-conflicting-outputs
+  l10n: dart run easy_localization:generate -S assets/l10n -f keys -O lib/l10n -o locale_keys.g.dart
   windows_debug:
     - flutter clean
     - dart run scripts/prepare_build.dart

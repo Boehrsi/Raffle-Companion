@@ -1,10 +1,12 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/services.dart';
 import 'package:sprintf/sprintf.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../l10n/locale_keys.g.dart';
 import '../types/entry.dart';
 import '../widgets/input.dart';
-import 'l10n.dart';
+import '../l10n/l10n.dart';
 import 'text.dart';
 
 Future<bool> canSend() async {
@@ -35,7 +37,7 @@ Future<void> sendFeedbackMail(String version) async {
   final uri = Uri(
     scheme: 'mailto',
     path: "rafflecompanion@boehrsi.de",
-    query: sprintf(kSendMailQuery, ['Raffle Companion feedback', '$kTextInfoVersion: $version\n\n']),
+    query: sprintf(kSendMailQuery, ['Raffle Companion feedback', '${LocaleKeys.infoVersion.tr()}: $version\n\n']),
   );
   await launchUrl(uri);
 }

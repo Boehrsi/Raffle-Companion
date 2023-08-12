@@ -1,6 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 
-import '../utils/l10n.dart';
+import '../l10n/locale_keys.g.dart';
 
 Future<bool?> showInfoDialog({required BuildContext context, required String title, required String content}) async {
   return showDialog<bool>(
@@ -14,7 +15,7 @@ Future<bool?> showInfoDialog({required BuildContext context, required String tit
             onPressed: () {
               Navigator.of(context).pop(true);
             },
-            child: const Text(kTextOk),
+            child: Text(LocaleKeys.ok.tr()),
           ),
         ],
       );
@@ -34,7 +35,7 @@ Future<bool?> showConfirmDialog({required BuildContext context, required String 
             onPressed: () {
               Navigator.of(context).pop(false);
             },
-            child: const Text(kTextCancel),
+            child: Text(LocaleKeys.cancel.tr()),
           ),
           Button(
             onPressed: () {
@@ -65,12 +66,12 @@ class ErrorDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ContentDialog(
-      title: const Text(kTextError),
+      title: Text(LocaleKeys.error.tr()),
       content: Text(error),
       actions: <Widget>[
         Button(
           onPressed: () => Navigator.pop(context),
-          child: const Text(kTextOk),
+          child: Text(LocaleKeys.ok.tr()),
         ),
       ],
     );

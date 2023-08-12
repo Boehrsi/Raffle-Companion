@@ -1,10 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../l10n/locale_keys.g.dart';
 import '../settings/settings_cubit.dart';
 import '../settings/settings_state.dart';
 import '../types/entry.dart';
-import '../utils/l10n.dart';
 import '../utils/text.dart';
 import '../widgets/dialogs.dart';
 import '../widgets/input.dart';
@@ -21,9 +22,9 @@ class EntryListChange extends StatefulWidget {
 
 class _EntryListChangeState extends State<EntryListChange> {
   final _formKey = GlobalKey<FormState>();
-  final _productInputField = FormTextBox(label: kTextProductRequired, validator: validatorNotEmpty);
-  final _tagInputField = FormTextBox(label: kTextTag);
-  final _keyInputField = FormTextBox(label: kTextKey);
+  final _productInputField = FormTextBox(label: LocaleKeys.productRequired.tr(), validator: validatorNotEmpty);
+  final _tagInputField = FormTextBox(label: LocaleKeys.tag.tr());
+  final _keyInputField = FormTextBox(label: LocaleKeys.key.tr());
   final _platformComboBox = FormComboBox();
 
   @override
@@ -52,15 +53,15 @@ class _EntryListChangeState extends State<EntryListChange> {
             _platformComboBox.controller.setup(state.settings.defaultPlatform, platformNameList);
             return FormDialog(
               formKey: _formKey,
-              title: _isEdit() ? kTextEntriesEdit : kTextEntriesAdd,
+              title: _isEdit() ? LocaleKeys.entriesEdit.tr() : LocaleKeys.entriesAdd.tr(),
               actions: [
                 Button(
                   onPressed: () => Navigator.pop(context),
-                  child: const Text(kTextCancel),
+                  child: Text(LocaleKeys.cancel.tr()),
                 ),
                 Button(
                   onPressed: _changeEntry,
-                  child: Text(_isEdit() ? kTextEdit : kTextAdd),
+                  child: Text(_isEdit() ? LocaleKeys.edit.tr() : LocaleKeys.add.tr()),
                 ),
               ],
               child: Column(
@@ -72,14 +73,14 @@ class _EntryListChangeState extends State<EntryListChange> {
                   _keyInputField,
                   Padding(
                     padding: const EdgeInsets.only(top: 8.0),
-                    child: InfoLabel(label: kTextPlatform),
+                    child: InfoLabel(label: LocaleKeys.platform.tr()),
                   ),
                   _platformComboBox,
                 ],
               ),
             );
           } else {
-            return const ErrorDialog(error: kTextErrorNoPlatform);
+            return ErrorDialog(error: LocaleKeys.errorNoPlatform.tr());
           }
         } else {
           return const Center(child: ProgressRing());

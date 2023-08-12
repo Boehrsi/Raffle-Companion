@@ -11,7 +11,8 @@ MailPreset _$MailPresetFromJson(Map<String, dynamic> json) => MailPreset(
       json['text'] as String,
     );
 
-Map<String, dynamic> _$MailPresetToJson(MailPreset instance) => <String, dynamic>{
+Map<String, dynamic> _$MailPresetToJson(MailPreset instance) =>
+    <String, dynamic>{
       'name': instance.name,
       'text': instance.text,
     };
