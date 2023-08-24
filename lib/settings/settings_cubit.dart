@@ -47,8 +47,6 @@ class SettingsCubit extends Cubit<SettingsState> {
     ));
   }
 
-  Future<void> updateSettingsState() async => emit(_settingsSuccess.copyWith());
-
   Future<void> changeMailPreset(String name, String newName, String text) async {
     final mailPresetList = _settingsSuccess.mailPresetList;
     final mailPreset = _getMailPreset(name);

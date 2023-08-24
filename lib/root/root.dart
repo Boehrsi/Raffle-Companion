@@ -2,8 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:raffle_companion/l10n/locale_keys.g.dart';
-import 'package:raffle_companion/settings/settings_cubit.dart';
-import 'package:raffle_companion/settings/settings_state.dart';
 import 'package:window_manager/window_manager.dart';
 
 import '../entry_list/entry_list.dart';
@@ -45,7 +43,7 @@ class _RootState extends State<Root> with WindowListener {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SettingsCubit, SettingsState>(
+    return BlocBuilder<RootCubit, RootState>(
       builder: (context, state) {
         return NavigationView(
           appBar: const NavigationAppBar(

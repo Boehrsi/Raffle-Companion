@@ -35,6 +35,7 @@ class RootCubit extends Bloc<RootEvent, RootState> {
     on<LoadRoot>(_load, transformer: droppable());
     on<SetSize>(_setSize, transformer: restartable());
     on<SetTheme>(_setTheme);
+    on<SetLocale>(_setLocale);
   }
 
   Future<void> _load(LoadRoot event, emit) async {
@@ -62,6 +63,14 @@ class RootCubit extends Bloc<RootEvent, RootState> {
     }
   }
 
+  Future<void> _setLocale(SetLocale event, emit) async {
+    final currentState = state;
+    if (currentState is RootSuccess) {
+      final config = currentState.config.copyWith();
+      emit(RootSuccess(config));
+    }
+  }
+
   Future<void> _persistConfig(Config config) async {
     await saveData(configPath, config);
   }
@@ -81,6 +90,10 @@ class SetTheme extends RootEvent {
   final String theme;
 
   SetTheme(this.theme);
+}
+
+class SetLocale extends RootEvent {
+  SetLocale();
 }
 
 abstract class RootState {}
