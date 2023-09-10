@@ -36,7 +36,7 @@
   "entriesCopyHtml": "HTML",
   "entriesCopyMarkdown": "Markdown",
   "entriesCopyHint": "Kopiert alle derzeit sichtbaren Einträge ({}) in die Systemzwischenablage. Es werden keine Duplikate kopiert.",
-  "entriesSearch": "Nach Namen und Tags suchen",
+  "entriesSearch": "Suchen",
   "entriesMarkedUsed": "Einträge wurden als verwendet markiert",
   "entriesMarkNotUsedConfirm": "Möchten Sie diesen Eintrag als verfügbar markieren?",
   "entriesNothingSelect": "Keine Einträge ausgewählt",

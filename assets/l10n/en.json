@@ -36,7 +36,7 @@
   "entriesCopyHtml": "HTML",
   "entriesCopyMarkdown": "Markdown",
   "entriesCopyHint": "Copies all currently visible entries ({}) to the system clipboard. No duplicates will be copied.",
-  "entriesSearch": "Search for names and tags",
+  "entriesSearch": "Search",
   "entriesMarkedUsed": "Entries marked as used",
   "entriesMarkNotUsedConfirm": "Do you want to mark this entry as available?",
   "entriesNothingSelect": "No entries selected",
