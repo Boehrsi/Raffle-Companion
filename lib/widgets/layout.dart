@@ -8,7 +8,7 @@ import '../styles/text.dart';
 class ConstraintWidthContainer extends StatelessWidget {
   final Widget child;
 
-  const ConstraintWidthContainer({required this.child, Key? key}) : super(key: key);
+  const ConstraintWidthContainer({required this.child, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class ConstraintWidthContainer extends StatelessWidget {
 class AppBarTitle extends StatelessWidget {
   final String text;
 
-  const AppBarTitle({required this.text, Key? key}) : super(key: key);
+  const AppBarTitle({required this.text, super.key});
 
   @override
   Widget build(BuildContext context) {

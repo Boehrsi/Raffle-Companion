@@ -61,7 +61,7 @@ Future<void> showErrorDialog({required BuildContext context, required String err
 class ErrorDialog extends StatelessWidget {
   final String error;
 
-  const ErrorDialog({required this.error, Key? key}) : super(key: key);
+  const ErrorDialog({required this.error, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +84,7 @@ class FormDialog extends StatelessWidget {
   final Widget child;
   final List<Widget> actions;
 
-  const FormDialog({Key? key, required this.formKey, required this.title, required this.child, required this.actions}) : super(key: key);
+  const FormDialog({super.key, required this.formKey, required this.title, required this.child, required this.actions});
 
   @override
   Widget build(BuildContext context) {
@@ -105,11 +105,10 @@ class _SizedDialog extends StatelessWidget {
   final List<Widget> actions;
 
   const _SizedDialog({
-    Key? key,
     required this.title,
     required this.child,
     required this.actions,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

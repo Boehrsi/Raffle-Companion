@@ -17,7 +17,7 @@ import '../widgets/layout.dart';
 import '../widgets/text.dart';
 
 class NotifyWinners extends StatefulWidget {
-  const NotifyWinners({Key? key}) : super(key: key);
+  const NotifyWinners({super.key});
 
   @override
   State<NotifyWinners> createState() => _NotifyWinnersState();
@@ -194,10 +194,10 @@ class _NotifyWinnersState extends State<NotifyWinners> {
 
 class WinnerRow extends StatelessWidget {
   const WinnerRow({
-    Key? key,
+    super.key,
     required this.mailInputField,
     required this.keyInputField,
-  }) : super(key: key);
+  });
 
   final FormTextBox mailInputField;
   final FormTextBox keyInputField;

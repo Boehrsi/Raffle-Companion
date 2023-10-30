@@ -19,7 +19,7 @@ import 'entry_list_state.dart';
 class EntryList extends StatefulWidget {
   final bool showUsed;
 
-  const EntryList({required this.showUsed, Key? key}) : super(key: key);
+  const EntryList({required this.showUsed, super.key});
 
   @override
   State<EntryList> createState() => _EntryListState();

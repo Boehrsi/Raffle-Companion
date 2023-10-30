@@ -10,7 +10,7 @@ class FormTextBox extends StatefulWidget {
 
   TextEditingController get controller => _controller;
 
-  FormTextBox({Key? key, required this.label, this.validator, this.height = 88.0, this.multiLine = false}) : super(key: key);
+  FormTextBox({super.key, required this.label, this.validator, this.height = 88.0, this.multiLine = false});
 
   @override
   State<FormTextBox> createState() => _FormTextBoxState();
@@ -61,7 +61,7 @@ class FormComboBox extends StatefulWidget {
 
   ComboBoxController get controller => _controller;
 
-  FormComboBox({this.onChanged, Key? key}) : super(key: key);
+  FormComboBox({this.onChanged, super.key});
 
   @override
   State<FormComboBox> createState() => _FormComboBoxState();
@@ -103,7 +103,7 @@ class _FormComboBoxState extends State<FormComboBox> {
 class ConstraintWidthInput extends StatelessWidget {
   final Widget child;
 
-  const ConstraintWidthInput({required this.child, Key? key}) : super(key: key);
+  const ConstraintWidthInput({required this.child, super.key});
 
   @override
   Widget build(BuildContext context) {

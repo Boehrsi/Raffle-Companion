@@ -14,7 +14,7 @@ import '../widgets/layout.dart';
 import '../widgets/text.dart';
 
 class MailPresetSettings extends StatefulWidget {
-  const MailPresetSettings({Key? key}) : super(key: key);
+  const MailPresetSettings({super.key});
 
   @override
   State<MailPresetSettings> createState() => _MailPresetSettingsState();
@@ -205,7 +205,7 @@ class MailPresetTile extends StatelessWidget {
   final OnMailPresetChange onChange;
   final OnMailPresetDelete onDelete;
 
-  const MailPresetTile({Key? key, required this.name, required this.text, required this.onChange, required this.onDelete}) : super(key: key);
+  const MailPresetTile({super.key, required this.name, required this.text, required this.onChange, required this.onDelete});
 
   @override
   Widget build(BuildContext context) {

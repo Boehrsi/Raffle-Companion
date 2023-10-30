@@ -11,7 +11,7 @@ import '../widgets/layout.dart';
 import '../widgets/text.dart';
 
 class UiSettings extends StatefulWidget {
-  const UiSettings({Key? key}) : super(key: key);
+  const UiSettings({super.key});
 
   @override
   State<UiSettings> createState() => _UiSettingsState();

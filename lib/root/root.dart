@@ -15,7 +15,7 @@ import '../widgets/layout.dart';
 import 'navigation.dart';
 
 class Root extends StatefulWidget {
-  const Root({Key? key}) : super(key: key);
+  const Root({super.key});
 
   @override
   State<Root> createState() => _RootState();

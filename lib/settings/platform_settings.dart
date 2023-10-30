@@ -13,7 +13,7 @@ import 'settings_cubit.dart';
 import 'settings_state.dart';
 
 class PlatformSettings extends StatefulWidget {
-  const PlatformSettings({Key? key}) : super(key: key);
+  const PlatformSettings({super.key});
 
   @override
   State<PlatformSettings> createState() => _PlatformSettingsState();
@@ -184,7 +184,7 @@ class PlatformTile extends StatelessWidget {
   final OnPlatformChange onChange;
   final OnPlatformDelete onDelete;
 
-  const PlatformTile({Key? key, required this.name, required this.onChange, required this.onDelete}) : super(key: key);
+  const PlatformTile({super.key, required this.name, required this.onChange, required this.onDelete});
 
   @override
   Widget build(BuildContext context) {

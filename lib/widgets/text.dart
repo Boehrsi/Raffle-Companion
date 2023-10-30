@@ -5,7 +5,7 @@ import '../styles/text.dart';
 class LargeLabel extends StatelessWidget {
   final String label;
 
-  const LargeLabel({required this.label, Key? key}) : super(key: key);
+  const LargeLabel({required this.label, super.key});
 
   @override
   Widget build(BuildContext context) {

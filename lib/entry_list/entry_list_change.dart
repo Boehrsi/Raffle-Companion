@@ -14,7 +14,7 @@ import 'entry_list_cubit.dart';
 class EntryListChange extends StatefulWidget {
   final Entry? entry;
 
-  const EntryListChange({this.entry, Key? key}) : super(key: key);
+  const EntryListChange({this.entry, super.key});
 
   @override
   State<EntryListChange> createState() => _EntryListChangeState();

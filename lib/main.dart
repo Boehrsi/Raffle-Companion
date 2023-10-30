@@ -53,7 +53,7 @@ void main() async {
 class RaffleCompanion extends StatelessWidget {
   final RootCubit rootCubit;
 
-  const RaffleCompanion({required this.rootCubit, Key? key}) : super(key: key);
+  const RaffleCompanion({required this.rootCubit, super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -13,7 +13,7 @@ import 'info_cubit.dart';
 import 'info_state.dart';
 
 class Info extends StatefulWidget {
-  const Info({Key? key}) : super(key: key);
+  const Info({super.key});
 
   @override
   State<Info> createState() => _InfoState();
