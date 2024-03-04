@@ -85,6 +85,7 @@ class _FormComboBoxState extends State<FormComboBox> {
         valueListenable: widget._controller,
         builder: (context, value, child) {
           return ComboBox<String>(
+            isExpanded: true,
             value: value.toString(),
             onChanged: widget.onChanged ?? (String? newValue) => controller.value = newValue!,
             items: controller._items.map<ComboBoxItem<String>>((String value) {

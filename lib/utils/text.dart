@@ -19,7 +19,9 @@ String _setupMailText(String mailPreset, String raffleName, String raffleUrl, St
   if (platform?.isNotEmpty == true) {
     result = result.replaceAll('%PLATFORM%', platform!);
   }
-  return result;
+  return _sanitizeMailText(result);
 }
+
+String _sanitizeMailText(String input) => Uri.encodeComponent(input);
 
 String? validatorNotEmpty(value) => (value == null || value.isEmpty) ? LocaleKeys.errorNotEmpty.tr() : null;

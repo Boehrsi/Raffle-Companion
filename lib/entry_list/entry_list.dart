@@ -306,12 +306,14 @@ class _EntryListState extends State<EntryList> {
   }
 
   void _showCopySuccessSnackbar(BuildContext context) {
-    showSnackbar(
+    displayInfoBar(
       context,
-      InfoBar(
-        title: Text(LocaleKeys.copied.tr()),
-        content: Text(LocaleKeys.entriesClipboard.tr()),
-      ),
+      builder: (BuildContext context, void Function() close) {
+        return InfoBar(
+          title: Text(LocaleKeys.copied.tr()),
+          content: Text(LocaleKeys.entriesClipboard.tr()),
+        );
+      },
     );
   }
 }
