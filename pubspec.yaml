@@ -14,7 +14,7 @@ dependencies:
   bloc_concurrency: ^0.2.4
   easy_localization: ^3.0.5
   fluent_ui: ^4.8.6
-  flutter_bloc: ^8.1.4
+  flutter_bloc: ^8.1.5
   json_annotation: ^4.8.1
   package_info_plus: ^6.0.0
   path: ^1.9.0
