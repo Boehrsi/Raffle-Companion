@@ -11,7 +11,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  bloc_concurrency: ^0.2.4
+  bloc_concurrency: ^0.2.5
   easy_localization: ^3.0.5
   fluent_ui: ^4.8.6
   flutter_bloc: ^8.1.4
