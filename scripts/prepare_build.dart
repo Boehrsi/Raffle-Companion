@@ -8,7 +8,7 @@ void main() async {
 
 Future<void> copyConfigFiles() async {
   const source = "./files";
-  const target = "./build/windows/runner/Release/files";
+  const target = "./build/windows/x64/runner/Release/files";
   await Directory(target).create(recursive: true);
   await copyPath(source, target);
 }
