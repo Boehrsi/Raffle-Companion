@@ -2,7 +2,7 @@
 
 Manage your raffles, the easy way.
 
-![Raffle Companion](https://github.com/Boehrsi/Raffle-Companion/assets/7944013/23538fa7-cc12-4697-bf6d-b35a8e059b5d)
+![Raffle Companion](https://github.com/user-attachments/assets/75caf75b-5ae2-4027-be10-ad59756113c8)
 
 ## Features
 
