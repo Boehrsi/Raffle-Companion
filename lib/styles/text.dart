@@ -1,7 +1,11 @@
-import 'package:flutter/material.dart';
+import 'package:fluent_ui/fluent_ui.dart';
 
 extension TextStyles on BuildContext {
-  TextStyle? get titleLargeStyle => Theme.of(this).textTheme.titleLarge;
+  TextStyle? get textStyleTitle => _of().typography.title;
 
-  TextStyle? get captionStyle => Theme.of(this).textTheme.bodyMedium?.copyWith(color: Theme.of(this).textTheme.bodySmall?.color);
+  TextStyle? get textStyleSubtitle => _of().typography.subtitle;
+
+  TextStyle? get textStyleBody => _of().typography.body;
+
+  FluentThemeData _of() => FluentTheme.of(this);
 }

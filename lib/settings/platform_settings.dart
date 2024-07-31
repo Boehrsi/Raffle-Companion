@@ -39,7 +39,8 @@ class _PlatformSettingsState extends State<PlatformSettings> {
             header: PageHeader(
               title: Text(LocaleKeys.platformSettings.tr()),
               commandBar: CommandBar(
-                overflowBehavior: CommandBarOverflowBehavior.noWrap,
+                mainAxisAlignment: MainAxisAlignment.end,
+                overflowBehavior: CommandBarOverflowBehavior.dynamicOverflow,
                 primaryItems: [
                   CommandBarButton(
                     icon: const Icon(FluentIcons.add),

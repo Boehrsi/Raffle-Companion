@@ -1,5 +1,6 @@
 {
   "ok": "Ok",
+  "none": "Keine",
   "cancel": "Abbrechen",
   "info": "Information",
   "error": "Fehler",
@@ -26,7 +27,7 @@
   "entries": "Einträge",
   "entriesAvailable": "Verfügbare Einträge",
   "entriesUsed": "Verwendete Einträge",
-  "entriesSelected": "Einträge ({} ausgewählt)",
+  "entriesSelected": "{} ausgewählt",
   "entriesAdd": "Eintrag hinzufügen",
   "entriesEdit": "Eintrag bearbeiten",
   "entriesClipboard": "Einträge in die Zwischenablage kopiert",

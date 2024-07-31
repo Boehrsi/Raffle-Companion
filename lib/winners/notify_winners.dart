@@ -66,6 +66,8 @@ class _NotifyWinnersState extends State<NotifyWinners> {
               header: PageHeader(
                 title: Text(LocaleKeys.winnerNotify.tr()),
                 commandBar: CommandBar(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  overflowBehavior: CommandBarOverflowBehavior.dynamicOverflow,
                   primaryItems: [
                     CommandBarButton(
                       icon: const Icon(FluentIcons.check_mark),

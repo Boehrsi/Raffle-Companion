@@ -38,27 +38,21 @@ class _EntryListState extends State<EntryList> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<EntryListCubit, EntryListState>(builder: (context, state) {
+    return BlocBuilder<EntryListCubit, EntryListState>(
+        builder: (context, state) {
       if (state is EntryListSuccess) {
         final showUsed = widget.showUsed;
         final entriesSelected = state.selectedList.isNotEmpty;
         return ScaffoldPage(
           header: PageHeader(
-            title: Text(showUsed ? LocaleKeys.entriesUsed.tr() : LocaleKeys.entriesAvailable.tr()),
+            title: Text(showUsed
+                ? LocaleKeys.entriesUsed.tr()
+                : LocaleKeys.entriesAvailable.tr()),
             commandBar: CommandBar(
+              mainAxisAlignment: MainAxisAlignment.end,
+              overflowBehavior: CommandBarOverflowBehavior.dynamicOverflow,
               primaryItems: [
                 if (!showUsed) ...[
-                  CommandBarButton(
-                    icon: const Icon(FluentIcons.check_mark),
-                    label: Text(LocaleKeys.markUsed.tr()),
-                    onPressed: entriesSelected ? _markUsed : null,
-                  ),
-                  CommandBarButton(
-                    icon: const Icon(FluentIcons.send),
-                    label: Text(LocaleKeys.winnerNotify.tr()),
-                    onPressed: entriesSelected ? _notifyWinners : null,
-                  ),
-                  const CommandBarSeparator(),
                   CommandBarButton(
                     icon: const Icon(FluentIcons.add),
                     label: Text(LocaleKeys.add.tr()),
@@ -67,7 +61,8 @@ class _EntryListState extends State<EntryList> {
                   CommandBarButton(
                     icon: const Icon(FluentIcons.delete),
                     label: Text(LocaleKeys.delete.tr()),
-                    onPressed: entriesSelected ? _showConfirmDeleteDialog : null,
+                    onPressed:
+                        entriesSelected ? _showConfirmDeleteDialog : null,
                   ),
                 ],
               ],
@@ -127,17 +122,52 @@ class _EntryListState extends State<EntryList> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                LocaleKeys.entriesSelected.tr(args: [state.selectedList.length.toString()]),
-                                style: context.titleLargeStyle,
+                                LocaleKeys.entriesSelected.tr(args: [
+                                  state.selectedList.isEmpty ? LocaleKeys.none.tr() : state.selectedList.length.toString()
+                                ]),
+                                style: context.textStyleSubtitle,
                               ),
-                              Button(
-                                onPressed: entriesSelected ? _unselectAllEntries : null,
-                                child: Text(LocaleKeys.unselect.tr()),
+                              Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 4.0),
+                                    child: Button(
+                                      onPressed:
+                                          entriesSelected ? _markUsed : null,
+                                      child: Text(LocaleKeys.markUsed.tr()),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 4.0),
+                                    child: Button(
+                                      onPressed: entriesSelected
+                                          ? _notifyWinners
+                                          : null,
+                                      child: Text(LocaleKeys.winnerNotify.tr()),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 4.0),
+                                    child: IconButton(
+                                      icon: const Icon(FluentIcons.clear,
+                                          size: 16.0),
+                                      onPressed: entriesSelected
+                                          ? _unselectAllEntries
+                                          : null,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
-                          content: Text(
-                              state.selectedList.isEmpty ? LocaleKeys.entriesNothingSelect.tr() : state.selectedList.map((e) => e.name).join(", ")),
+                          content: Text(state.selectedList.isEmpty
+                              ? LocaleKeys.entriesNothingSelect.tr()
+                              : state.selectedList
+                                  .map((e) => e.name)
+                                  .join(", ")),
                         ),
                       ),
                     if (state.entryList.isNotEmpty) ...[
@@ -150,33 +180,44 @@ class _EntryListState extends State<EntryList> {
                             final subtitle = _buildSubtitle(entry);
                             return showUsed
                                 ? Tooltip(
-                                    message: "${LocaleKeys.key.tr()}: ${entry.key}",
+                                    message:
+                                        "${LocaleKeys.key.tr()}: ${entry.key}",
                                     displayHorizontally: true,
                                     child: ListTile(
                                       title: Text(entry.name),
                                       subtitle: Text(subtitle),
                                       trailing: Button(
-                                        child: Text(LocaleKeys.markNotUsed.tr()),
-                                        onPressed: () => _showConfirmMarkNotUsedDialog(entry),
+                                        child:
+                                            Text(LocaleKeys.markNotUsed.tr()),
+                                        onPressed: () =>
+                                            _showConfirmMarkNotUsedDialog(
+                                                entry),
                                       ),
                                     ),
                                   )
                                 : ListTile(
-                                    leading: Icon(entry.key != null && entry.key!.isNotEmpty ? FluentIcons.encryption : FluentIcons.field_empty),
+                                    leading: Icon(entry.key != null &&
+                                            entry.key!.isNotEmpty
+                                        ? FluentIcons.encryption
+                                        : FluentIcons.field_empty),
                                     title: Text(entry.name),
                                     subtitle: Text(subtitle),
                                     trailing: Row(
                                       children: [
                                         Padding(
-                                          padding: const EdgeInsets.only(right: 8.0),
+                                          padding:
+                                              const EdgeInsets.only(right: 8.0),
                                           child: Button(
                                             child: Text(LocaleKeys.edit.tr()),
-                                            onPressed: () => _changeEntryDialog(entry),
+                                            onPressed: () =>
+                                                _changeEntryDialog(entry),
                                           ),
                                         ),
                                         Checkbox(
-                                          checked: state.selectedList.contains(entry),
-                                          onChanged: (value) => _selectEntry(entry, value),
+                                          checked: state.selectedList
+                                              .contains(entry),
+                                          onChanged: (value) =>
+                                              _selectEntry(entry, value),
                                         ),
                                       ],
                                     ),
@@ -185,7 +226,8 @@ class _EntryListState extends State<EntryList> {
                         ),
                       ),
                     ],
-                    if (state.entryList.isEmpty) Center(child: Text(LocaleKeys.entriesEmpty.tr())),
+                    if (state.entryList.isEmpty)
+                      Center(child: Text(LocaleKeys.entriesEmpty.tr())),
                   ],
                 ),
               ),
@@ -212,7 +254,8 @@ class _EntryListState extends State<EntryList> {
     final isChange = entry != null;
     showDialog(
       context: context,
-      builder: (context) => isChange ? EntryListChange(entry: entry) : const EntryListChange(),
+      builder: (context) =>
+          isChange ? EntryListChange(entry: entry) : const EntryListChange(),
     );
   }
 
@@ -226,11 +269,13 @@ class _EntryListState extends State<EntryList> {
 
   void _markUsed() => context.read<EntryListCubit>().markUsed();
 
-  void _markNotUsed(Entry entry) => context.read<EntryListCubit>().markNotUsed(entry);
+  void _markNotUsed(Entry entry) =>
+      context.read<EntryListCubit>().markNotUsed(entry);
 
   void _notifyWinners() {
     final settingsCubit = context.read<SettingsCubit>();
-    if (settingsCubit.state is SettingsSuccess && (settingsCubit.state as SettingsSuccess).mailPresetList.isNotEmpty) {
+    if (settingsCubit.state is SettingsSuccess &&
+        (settingsCubit.state as SettingsSuccess).mailPresetList.isNotEmpty) {
       Navigator.push(
         context,
         FluentPageRoute(
@@ -257,7 +302,10 @@ class _EntryListState extends State<EntryList> {
 
   void _showConfirmDeleteDialog() {
     showConfirmDialog(
-            context: context, title: LocaleKeys.delete.tr(), content: LocaleKeys.entriesDeleteConfirm.tr(), positiveText: LocaleKeys.delete.tr())
+            context: context,
+            title: LocaleKeys.delete.tr(),
+            content: LocaleKeys.entriesDeleteConfirm.tr(),
+            positiveText: LocaleKeys.delete.tr())
         .then((bool? value) {
       if (value != null && value) {
         _delete();
@@ -275,7 +323,8 @@ class _EntryListState extends State<EntryList> {
       builder: (BuildContext context) {
         return ContentDialog(
           title: Text(LocaleKeys.entriesExport.tr()),
-          content: Text(LocaleKeys.entriesCopyHint.tr(args: [count.toString()])),
+          content:
+              Text(LocaleKeys.entriesCopyHint.tr(args: [count.toString()])),
           actions: <Widget>[
             Button(
               onPressed: () {
@@ -286,7 +335,7 @@ class _EntryListState extends State<EntryList> {
             Button(
               onPressed: () {
                 cubit.copy(false);
-                _showCopySuccessSnackbar(context);
+                _showCopySuccessInfoBar(context);
                 Navigator.of(context).pop();
               },
               child: Text(LocaleKeys.entriesCopyHtml.tr()),
@@ -294,7 +343,7 @@ class _EntryListState extends State<EntryList> {
             Button(
               onPressed: () {
                 cubit.copy(true);
-                _showCopySuccessSnackbar(context);
+                _showCopySuccessInfoBar(context);
                 Navigator.of(context).pop();
               },
               child: Text(LocaleKeys.entriesCopyMarkdown.tr()),
@@ -305,7 +354,7 @@ class _EntryListState extends State<EntryList> {
     );
   }
 
-  void _showCopySuccessSnackbar(BuildContext context) {
+  void _showCopySuccessInfoBar(BuildContext context) {
     displayInfoBar(
       context,
       builder: (BuildContext context, void Function() close) {

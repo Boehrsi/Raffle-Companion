@@ -1,5 +1,6 @@
 {
   "ok": "Ok",
+  "none": "None",
   "cancel": "Cancel",
   "info": "Information",
   "error": "Error",
@@ -26,7 +27,7 @@
   "entries": "Entries",
   "entriesAvailable": "Available entries",
   "entriesUsed": "Used entries",
-  "entriesSelected": "Entries ({} selected)",
+  "entriesSelected": "{} selected",
   "entriesAdd": "Add Entry",
   "entriesEdit": "Edit Entry",
   "entriesClipboard": "Copied entries to clipboard",

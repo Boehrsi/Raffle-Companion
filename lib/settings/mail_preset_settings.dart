@@ -41,7 +41,8 @@ class _MailPresetSettingsState extends State<MailPresetSettings> {
             header: PageHeader(
               title: Text(LocaleKeys.mailPresetSettings.tr()),
               commandBar: CommandBar(
-                overflowBehavior: CommandBarOverflowBehavior.noWrap,
+                mainAxisAlignment: MainAxisAlignment.end,
+                overflowBehavior: CommandBarOverflowBehavior.dynamicOverflow,
                 primaryItems: [
                   CommandBarButton(
                     icon: const Icon(FluentIcons.add),
@@ -147,7 +148,7 @@ class _MailPresetSettingsState extends State<MailPresetSettings> {
                 padding: const EdgeInsets.only(top: 8.0),
                 child: SelectableText(
                   LocaleKeys.presetMustContain.tr(),
-                  style: context.captionStyle,
+                  style: context.textStyleBody,
                 ),
               )
             ],

@@ -31,7 +31,7 @@ class AppBarTitle extends StatelessWidget {
         alignment: AlignmentDirectional.centerStart,
         child: Text(
           text,
-          style: context.titleLargeStyle,
+          style: context.textStyleTitle,
         ),
       ),
     );

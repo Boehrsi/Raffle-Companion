@@ -2,6 +2,7 @@
 
 abstract class  LocaleKeys {
   static const ok = 'ok';
+  static const none = 'none';
   static const cancel = 'cancel';
   static const info = 'info';
   static const error = 'error';
