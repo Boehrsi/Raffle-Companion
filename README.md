@@ -4,6 +4,21 @@ Manage your raffles, the easy way.
 
 ![Raffle Companion](https://github.com/user-attachments/assets/75caf75b-5ae2-4027-be10-ad59756113c8)
 
+<a href="https://idx.google.com/import?url=https://github.com/Boehrsi/Raffle-Companion">
+  <picture>
+    <source
+      media="(prefers-color-scheme: dark)"
+      srcset="https://cdn.idx.dev/btn/open_dark_32.svg">
+    <source
+      media="(prefers-color-scheme: light)"
+      srcset="https://cdn.idx.dev/btn/open_light_32.svg">
+    <img
+      height="32"
+      alt="Open in IDX"
+      src="https://cdn.idx.dev/btn/open_purple_32.svg">
+  </picture>
+</a>
+
 ## Features
 
 - Add and manage prices
