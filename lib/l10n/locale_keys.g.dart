@@ -1,6 +1,6 @@
 // DO NOT EDIT. This is code generated via package:easy_localization/generate.dart
 
-abstract class LocaleKeys {
+abstract class  LocaleKeys {
   static const ok = 'ok';
   static const none = 'none';
   static const cancel = 'cancel';
@@ -108,4 +108,5 @@ abstract class LocaleKeys {
   static const errorNoBrowser = 'errorNoBrowser';
   static const errorCountToHigh = 'errorCountToHigh';
   static const errorCountToSmall = 'errorCountToSmall';
+
 }
