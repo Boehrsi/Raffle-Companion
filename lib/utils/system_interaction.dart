@@ -3,10 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:sprintf/sprintf.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../l10n/l10n.dart';
 import '../l10n/locale_keys.g.dart';
 import '../types/entry.dart';
 import '../widgets/input.dart';
-import '../l10n/l10n.dart';
 import 'text.dart';
 
 Future<bool> canSend() async {

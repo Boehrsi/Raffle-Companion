@@ -7,10 +7,11 @@ import 'package:window_manager/window_manager.dart';
 import '../entry_list/entry_list.dart';
 import '../info/info.dart';
 import '../l10n/l10n.dart';
-import '../root/root_cubit.dart';
+import '../root/root_bloc.dart';
 import '../settings/mail_preset_settings.dart';
 import '../settings/platform_settings.dart';
 import '../settings/ui_settings.dart';
+import '../tools/date_tools.dart';
 import '../widgets/layout.dart';
 import 'navigation.dart';
 
@@ -38,12 +39,17 @@ class _RootState extends State<Root> with WindowListener {
 
   @override
   void onWindowResize() async {
-    await windowManager.getSize().then((size) => context.read<RootCubit>().add(SetSize(size)));
+    await windowManager.getSize().then((size) {
+      final safeContext = context;
+      if (safeContext.mounted) {
+        safeContext.read<RootBloc>().add(SetSize(size));
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<RootCubit, RootState>(
+    return BlocBuilder<RootBloc, RootState>(
       builder: (context, state) {
         return NavigationView(
           appBar: const NavigationAppBar(
@@ -51,43 +57,55 @@ class _RootState extends State<Root> with WindowListener {
             actions: AppBarActions(),
             automaticallyImplyLeading: false,
           ),
-          pane: NavigationPane(selected: _pageIndex, onChanged: (page) => setState(() => _pageIndex = page), items: [
-            PaneItemHeader(header: Text(LocaleKeys.entries.tr())),
-            PaneItem(
-              icon: const Icon(FluentIcons.list),
-              title: Text(LocaleKeys.available.tr()),
-              body: const EntryList(showUsed: false),
-            ),
-            PaneItem(
-              icon: const Icon(FluentIcons.check_mark),
-              title: Text(LocaleKeys.used.tr()),
-              body: const EntryList(showUsed: true),
-            ),
-            PaneItemSeparator(),
-            PaneItemHeader(header: Text(LocaleKeys.settings.tr())),
-            PaneItem(
-              icon: const Icon(FluentIcons.settings),
-              title: Text(LocaleKeys.platforms.tr()),
-              body: const PlatformSettings(),
-            ),
-            PaneItem(
-              icon: const Icon(FluentIcons.mail_options),
-              title: Text(LocaleKeys.mailPresets.tr()),
-              body: const MailPresetSettings(),
-            ),
-            PaneItem(
-              icon: const Icon(FluentIcons.content_settings),
-              title: Text(LocaleKeys.ui.tr()),
-              body: const UiSettings(),
-            ),
-          ], footerItems: [
-            PaneItemSeparator(),
-            PaneItem(
-              icon: const Icon(FluentIcons.info),
-              title: Text(LocaleKeys.infoTitle.tr()),
-              body: const Info(),
-            ),
-          ]),
+          pane: NavigationPane(
+            selected: _pageIndex,
+            onChanged: (page) => setState(() => _pageIndex = page),
+            items: [
+              PaneItemHeader(header: Text(LocaleKeys.entries.tr())),
+              PaneItem(
+                icon: const Icon(FluentIcons.list),
+                title: Text(LocaleKeys.available.tr()),
+                body: const EntryList(showUsed: false),
+              ),
+              PaneItem(
+                icon: const Icon(FluentIcons.check_mark),
+                title: Text(LocaleKeys.used.tr()),
+                body: const EntryList(showUsed: true),
+              ),
+              PaneItemSeparator(),
+              PaneItemHeader(header: Text(LocaleKeys.tools.tr())),
+              PaneItem(
+                icon: const Icon(FluentIcons.date_time),
+                title: Text(LocaleKeys.date.tr()),
+                body: const DateTools(),
+              ),
+              PaneItemSeparator(),
+              PaneItemHeader(header: Text(LocaleKeys.settings.tr())),
+              PaneItem(
+                icon: const Icon(FluentIcons.settings),
+                title: Text(LocaleKeys.platforms.tr()),
+                body: const PlatformSettings(),
+              ),
+              PaneItem(
+                icon: const Icon(FluentIcons.mail_options),
+                title: Text(LocaleKeys.mailPresets.tr()),
+                body: const MailPresetSettings(),
+              ),
+              PaneItem(
+                icon: const Icon(FluentIcons.content_settings),
+                title: Text(LocaleKeys.ui.tr()),
+                body: const UiSettings(),
+              ),
+            ],
+            footerItems: [
+              PaneItemSeparator(),
+              PaneItem(
+                icon: const Icon(FluentIcons.info),
+                title: Text(LocaleKeys.infoTitle.tr()),
+                body: const Info(),
+              ),
+            ],
+          ),
         );
       },
     );

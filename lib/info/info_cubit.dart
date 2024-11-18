@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../utils/files.dart';
 import '../l10n/l10n.dart';
+import '../utils/files.dart';
 import '../utils/system_interaction.dart';
 import 'info_state.dart';
 

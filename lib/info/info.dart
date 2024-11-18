@@ -3,9 +3,9 @@ import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../l10n/l10n.dart';
 import '../l10n/locale_keys.g.dart';
 import '../utils/colors.dart';
-import '../l10n/l10n.dart';
 import '../widgets/dialogs.dart';
 import '../widgets/layout.dart';
 import '../widgets/text.dart';
@@ -123,24 +123,27 @@ class _InfoState extends State<Info> {
 
   void _openFiles() {
     context.read<InfoCubit>().openFiles().then((result) {
-      if (!result) {
-        showInfoDialog(context: context, title: LocaleKeys.errorTitle.tr(), content: LocaleKeys.errorNoFileExplorer.tr());
+      final safeContext = context;
+      if (!result && safeContext.mounted) {
+        showInfoDialog(context: safeContext, title: LocaleKeys.errorTitle.tr(), content: LocaleKeys.errorNoFileExplorer.tr());
       }
     });
   }
 
   void _sendFeedback() {
     context.read<InfoCubit>().sendFeedback().then((result) {
-      if (!result) {
-        showInfoDialog(context: context, title: LocaleKeys.errorTitle.tr(), content: LocaleKeys.errorNoMailApp.tr());
+      final safeContext = context;
+      if (!result && safeContext.mounted) {
+        showInfoDialog(context: safeContext, title: LocaleKeys.errorTitle.tr(), content: LocaleKeys.errorNoMailApp.tr());
       }
     });
   }
 
   void _openGitHub() {
     context.read<InfoCubit>().openGithub().then((result) {
-      if (!result) {
-        showInfoDialog(context: context, title: LocaleKeys.errorTitle.tr(), content: LocaleKeys.errorNoBrowser.tr());
+      final safeContext = context;
+      if (!result && safeContext.mounted) {
+        showInfoDialog(context: safeContext, title: LocaleKeys.errorTitle.tr(), content: LocaleKeys.errorNoBrowser.tr());
       }
     });
   }

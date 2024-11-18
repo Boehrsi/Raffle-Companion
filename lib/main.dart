@@ -1,10 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:raffle_companion/tools/tools_cubit.dart';
 import 'package:window_manager/window_manager.dart';
 
 import '../root/root.dart';
-import '../root/root_cubit.dart';
+import '../root/root_bloc.dart';
 import '../utils/colors.dart';
 import '../utils/dimensions.dart';
 import '../utils/files.dart';
@@ -20,7 +21,7 @@ void main() async {
   await setupData();
   await prepareFiles();
 
-  final cubit = RootCubit()..add(LoadRoot());
+  final cubit = RootBloc()..add(LoadRoot());
   cubit.stream.listen((event) {
     if (event is RootSuccess) {
       WindowOptions windowOptions = WindowOptions(
@@ -51,7 +52,7 @@ void main() async {
 }
 
 class RaffleCompanion extends StatelessWidget {
-  final RootCubit rootCubit;
+  final RootBloc rootCubit;
 
   const RaffleCompanion({required this.rootCubit, super.key});
 
@@ -63,6 +64,7 @@ class RaffleCompanion extends StatelessWidget {
         BlocProvider(create: (BuildContext context) => EntryListCubit()),
         BlocProvider(create: (context) => SettingsCubit()..loadSettings(), lazy: false),
         BlocProvider(create: (context) => InfoCubit()),
+        BlocProvider(create: (context) => ToolsCubit()),
       ],
       child: FluentApp(
         debugShowCheckedModeBanner: false,

@@ -1,6 +1,6 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:raffle_companion/root/root_cubit.dart';
+import 'package:raffle_companion/root/root_bloc.dart';
 import 'package:window_manager/window_manager.dart';
 
 import '../styles/text.dart';
@@ -49,7 +49,7 @@ class AppBarActions extends StatelessWidget {
       width: 138,
       height: 50,
       child: WindowCaption(
-        brightness: context.watch<RootCubit>().theme.value,
+        brightness: context.watch<RootBloc>().theme.value,
         backgroundColor: Colors.transparent,
       ),
     );

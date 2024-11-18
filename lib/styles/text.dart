@@ -7,5 +7,7 @@ extension TextStyles on BuildContext {
 
   TextStyle? get textStyleBody => _of().typography.body;
 
+  TextStyle? get textStyleBodyStrong => _of().typography.bodyStrong;
+
   FluentThemeData _of() => FluentTheme.of(this);
 }

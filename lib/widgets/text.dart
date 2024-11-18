@@ -18,3 +18,20 @@ class LargeLabel extends StatelessWidget {
     );
   }
 }
+
+class MediumLabel extends StatelessWidget {
+  final String label;
+
+  const MediumLabel({required this.label, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 16.0, right: 12.0, bottom: 8.0),
+      child: Text(
+        label,
+        style: context.textStyleBody?.copyWith(fontWeight: FontWeight.bold),
+      ),
+    );
+  }
+}

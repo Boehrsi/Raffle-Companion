@@ -13,7 +13,7 @@ import '../utils/dimensions.dart';
 import '../utils/files.dart';
 import '../utils/json.dart';
 
-class RootCubit extends Bloc<RootEvent, RootState> {
+class RootBloc extends Bloc<RootEvent, RootState> {
   final configPath = RaffleFile.config.getFilePath();
 
   MapEntry<String, Brightness> get theme {
@@ -31,7 +31,7 @@ class RootCubit extends Bloc<RootEvent, RootState> {
     }
   }
 
-  RootCubit() : super(RootInitial()) {
+  RootBloc() : super(RootInitial()) {
     on<LoadRoot>(_load, transformer: droppable());
     on<SetSize>(_setSize, transformer: restartable());
     on<SetTheme>(_setTheme);

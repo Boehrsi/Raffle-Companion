@@ -33,6 +33,21 @@ class EntryListCubit extends Cubit<EntryListState> {
     _delegateSuccess(selectedList: selectedList);
   }
 
+  void selectRandomEntries(int count) {
+    final selectedList = state is EntryListSuccess ? _successState.selectedList : <Entry>[];
+    final toBeDrawn = count - selectedList.length;
+    if (toBeDrawn > 0) {
+      final possibleEntries = _successState.entryList
+          .where(
+            (entry) => !_successState.selectedList.contains(entry),
+          )
+          .toList()
+        ..shuffle();
+      final newSelectedList = selectedList + possibleEntries.sublist(0, toBeDrawn);
+      _delegateSuccess(selectedList: newSelectedList);
+    }
+  }
+
   void unselectAll() => _delegateSuccess(selectedList: <Entry>[]);
 
   Future<void> copy(bool isMarkdown) async => await copyToClipboard(_successState.entryList, isMarkdown);

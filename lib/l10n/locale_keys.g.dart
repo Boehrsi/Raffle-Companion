@@ -1,6 +1,6 @@
 // DO NOT EDIT. This is code generated via package:easy_localization/generate.dart
 
-abstract class  LocaleKeys {
+abstract class LocaleKeys {
   static const ok = 'ok';
   static const none = 'none';
   static const cancel = 'cancel';
@@ -26,6 +26,16 @@ abstract class  LocaleKeys {
   static const available = 'available';
   static const used = 'used';
   static const ui = 'ui';
+  static const tools = 'tools';
+  static const date = 'date';
+  static const hours = 'hours';
+  static const minutes = 'minutes';
+  static const day = 'day';
+  static const week = 'week';
+  static const month = 'month';
+  static const timestamp = 'timestamp';
+  static const clipboardSuccess = 'clipboardSuccess';
+  static const count = 'count';
   static const entries = 'entries';
   static const entriesAvailable = 'entriesAvailable';
   static const entriesUsed = 'entriesUsed';
@@ -36,6 +46,7 @@ abstract class  LocaleKeys {
   static const entriesEmpty = 'entriesEmpty';
   static const entriesDeleteConfirm = 'entriesDeleteConfirm';
   static const entriesExport = 'entriesExport';
+  static const entriesDraw = 'entriesDraw';
   static const entriesCopyHtml = 'entriesCopyHtml';
   static const entriesCopyMarkdown = 'entriesCopyMarkdown';
   static const entriesCopyHint = 'entriesCopyHint';
@@ -43,6 +54,7 @@ abstract class  LocaleKeys {
   static const entriesMarkedUsed = 'entriesMarkedUsed';
   static const entriesMarkNotUsedConfirm = 'entriesMarkNotUsedConfirm';
   static const entriesNothingSelect = 'entriesNothingSelect';
+  static const entriesSelectRandomHint = 'entriesSelectRandomHint';
   static const mailPresetSettings = 'mailPresetSettings';
   static const mailPresetDefault = 'mailPresetDefault';
   static const mailPresets = 'mailPresets';
@@ -78,6 +90,12 @@ abstract class  LocaleKeys {
   static const winnerSettings = 'winnerSettings';
   static const winnerPreset = 'winnerPreset';
   static const winnerList = 'winnerList';
+  static const toolsDateResult = 'toolsDateResult';
+  static const toolsDateSetOffset = 'toolsDateSetOffset';
+  static const toolsDateSetOffsetInfo = 'toolsDateSetOffsetInfo';
+  static const toolsDateSetTime = 'toolsDateSetTime';
+  static const toolsDateSetTimeInfo = 'toolsDateSetTimeInfo';
+  static const toolsDateFormatNumbersOnly = 'toolsDateFormatNumbersOnly';
   static const errorTitle = 'errorTitle';
   static const errorNotEmpty = 'errorNotEmpty';
   static const errorClipboard = 'errorClipboard';
@@ -88,5 +106,6 @@ abstract class  LocaleKeys {
   static const errorNoMailApp = 'errorNoMailApp';
   static const errorNoFileExplorer = 'errorNoFileExplorer';
   static const errorNoBrowser = 'errorNoBrowser';
-
+  static const errorCountToHigh = 'errorCountToHigh';
+  static const errorCountToSmall = 'errorCountToSmall';
 }

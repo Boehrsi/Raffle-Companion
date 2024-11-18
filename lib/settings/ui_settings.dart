@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:raffle_companion/root/root_cubit.dart';
+import 'package:raffle_companion/root/root_bloc.dart';
 
 import '../l10n/l10n.dart';
 import '../l10n/locale_keys.g.dart';
@@ -29,7 +29,7 @@ class _UiSettingsState extends State<UiSettings> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<RootCubit, RootState>(
+    return BlocConsumer<RootBloc, RootState>(
       listener: (context, state) => _setupBoxes(),
       builder: (BuildContext context, RootState state) {
         if (state is RootSuccess) {
@@ -67,7 +67,7 @@ class _UiSettingsState extends State<UiSettings> {
     final currentLanguage = getUserVisibleLocaleString(context.locale.languageCode);
     _languageComboBox.controller.setup(currentLanguage, kLocales.keys);
     _themeComboBox = FormComboBox(onChanged: _changeThemeSelection);
-    final currentBrightness = context.read<RootCubit>().theme.key.tr();
+    final currentBrightness = context.read<RootBloc>().theme.key.tr();
     final availableBrightness = kThemes.keys.map((element) => element.tr());
     _themeComboBox.controller.setup(currentBrightness, availableBrightness);
   }
@@ -75,13 +75,13 @@ class _UiSettingsState extends State<UiSettings> {
   void _changeLanguageSelection(String? value) {
     if (value != null) {
       context.setLocale(kLocales[value]!);
-      context.read<RootCubit>().add(SetLocale());
+      context.read<RootBloc>().add(SetLocale());
     }
   }
 
   void _changeThemeSelection(String? value) {
     if (value != null) {
-      context.read<RootCubit>().add(SetTheme(value));
+      context.read<RootBloc>().add(SetTheme(value));
     }
   }
 }

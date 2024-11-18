@@ -1,4 +1,5 @@
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:flutter/services.dart';
 
 class FormTextBox extends StatefulWidget {
   final _controller = TextEditingController();
@@ -6,11 +7,21 @@ class FormTextBox extends StatefulWidget {
   final String label;
   final double height;
   final FormFieldValidator<String>? validator;
+  final List<TextInputFormatter>? inputFormatters;
   final bool multiLine;
+  final ValueChanged<String>? onChanged;
 
   TextEditingController get controller => _controller;
 
-  FormTextBox({super.key, required this.label, this.validator, this.height = 88.0, this.multiLine = false});
+  FormTextBox({
+    super.key,
+    required this.label,
+    this.validator,
+    this.height = 88.0,
+    this.inputFormatters,
+    this.multiLine = false,
+    this.onChanged,
+  });
 
   @override
   State<FormTextBox> createState() => _FormTextBoxState();
@@ -28,9 +39,11 @@ class _FormTextBoxState extends State<FormTextBox> {
           InfoLabel(label: widget.label),
           TextFormBox(
             controller: widget._controller,
+            inputFormatters: widget.inputFormatters,
             validator: widget.validator,
             minLines: widget.multiLine ? 5 : 1,
             maxLines: widget.multiLine ? 10 : 1,
+            onChanged: widget.onChanged,
           ),
         ],
       ),
@@ -103,13 +116,14 @@ class _FormComboBoxState extends State<FormComboBox> {
 
 class ConstraintWidthInput extends StatelessWidget {
   final Widget child;
+  final double maxWidth;
 
-  const ConstraintWidthInput({required this.child, super.key});
+  const ConstraintWidthInput({required this.child, this.maxWidth = 300.0, super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 300,
+    return ConstrainedBox(
+      constraints: BoxConstraints(maxWidth: maxWidth),
       child: child,
     );
   }
