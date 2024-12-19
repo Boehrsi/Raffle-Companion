@@ -38,7 +38,7 @@ flutter:
 
 msix_config:
   display_name: Raffle Companion
-  msix_version: 1.4.0.0
+  msix_version: 1.5.0.0
   logo_path: media/icon.png
 
 scripts:
