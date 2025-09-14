@@ -1,5 +1,7 @@
 // DO NOT EDIT. This is code generated via package:easy_localization/generate.dart
 
+// ignore_for_file: constant_identifier_names
+
 abstract class  LocaleKeys {
   static const ok = 'ok';
   static const none = 'none';
@@ -8,6 +10,7 @@ abstract class  LocaleKeys {
   static const error = 'error';
   static const add = 'add';
   static const edit = 'edit';
+  static const save = 'save';
   static const delete = 'delete';
   static const copied = 'copied';
   static const platform = 'platform';

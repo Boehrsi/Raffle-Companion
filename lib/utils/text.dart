@@ -18,7 +18,7 @@ Uri setupSendUrl(String mail, String subject, String mailPresetText, String raff
   );
 }
 
-String? validatorNotEmpty(value) => (value == null || value.isEmpty) ? LocaleKeys.errorNotEmpty.tr() : null;
+String? validatorNotEmpty(String? value) => (value == null || value.isEmpty) ? LocaleKeys.errorNotEmpty.tr() : null;
 
 String formatDateTime(DateTime date) {
   final timezoneHours = date.timeZoneOffset.inHours;

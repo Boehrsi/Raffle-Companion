@@ -61,7 +61,7 @@ class _EntryListChangeState extends State<EntryListChange> {
                 ),
                 Button(
                   onPressed: _changeEntry,
-                  child: Text(_isEdit() ? LocaleKeys.edit.tr() : LocaleKeys.add.tr()),
+                  child: Text(LocaleKeys.save.tr()),
                 ),
               ],
               child: Column(

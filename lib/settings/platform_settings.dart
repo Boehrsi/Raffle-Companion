@@ -140,7 +140,7 @@ class _PlatformSettingsState extends State<PlatformSettings> {
               ),
               Button(
                 onPressed: () => _changePlatform(name),
-                child: Text(isChange ? LocaleKeys.edit.tr() : LocaleKeys.add.tr()),
+                child: Text(LocaleKeys.save.tr()),
               ),
             ],
             child: _nameInputField);

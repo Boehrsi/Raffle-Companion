@@ -3,7 +3,7 @@ description: Manage your raffles, the easy way.
 
 publish_to: 'none'
 
-version: 1.5.0+6
+version: 1.6.0+7
 
 environment:
   sdk: ">=2.17.0 <4.0.0"
@@ -16,7 +16,7 @@ dependencies:
   fluent_ui: ^4.12.0
   flutter_bloc: ^9.1.1
   json_annotation: ^4.9.0
-  package_info_plus: ^8.3.1
+  package_info_plus: ^9.0.0
   path: ^1.9.1
   path_provider: ^2.1.5
   sprintf: ^7.0.0

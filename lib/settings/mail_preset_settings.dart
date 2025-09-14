@@ -135,7 +135,7 @@ class _MailPresetSettingsState extends State<MailPresetSettings> {
             ),
             Button(
               onPressed: () => _changeMailPreset(name),
-              child: Text(isChange ? LocaleKeys.edit.tr() : LocaleKeys.add.tr()),
+              child: Text(LocaleKeys.save.tr()),
             ),
           ],
           child: Column(
@@ -158,7 +158,7 @@ class _MailPresetSettingsState extends State<MailPresetSettings> {
     );
   }
 
-  _showConfirmRestoreDialog() {
+  void _showConfirmRestoreDialog() {
     showConfirmDialog(
             context: context, title: LocaleKeys.restore.tr(), content: LocaleKeys.presetRestoreConfirm.tr(), positiveText: LocaleKeys.restore.tr())
         .then((bool? value) {
@@ -231,7 +231,7 @@ class MailPresetTile extends StatelessWidget {
   }
 }
 
-String? _getPresetTextValidator(value) {
+String? _getPresetTextValidator(String? value) {
   if (value == null || value.isEmpty) {
     return LocaleKeys.errorNotEmpty.tr();
   } else if (!value.contains('%RAFFLE_NAME%') || !value.contains('%RAFFLE_URL%') || !value.contains('%PRODUCT%') || !value.contains('%KEY%')) {
