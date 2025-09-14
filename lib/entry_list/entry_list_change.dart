@@ -22,7 +22,10 @@ class EntryListChange extends StatefulWidget {
 
 class _EntryListChangeState extends State<EntryListChange> {
   final _formKey = GlobalKey<FormState>();
-  final _productInputField = FormTextBox(label: LocaleKeys.productRequired.tr(), validator: validatorNotEmpty);
+  final _productInputField = FormTextBox(
+    label: LocaleKeys.productRequired.tr(),
+    validator: validatorNotEmpty,
+  );
   final _tagInputField = FormTextBox(label: LocaleKeys.tag.tr());
   final _keyInputField = FormTextBox(label: LocaleKeys.key.tr());
   final _platformComboBox = FormComboBox();
@@ -48,12 +51,19 @@ class _EntryListChangeState extends State<EntryListChange> {
     return BlocBuilder<SettingsCubit, SettingsState>(
       builder: (context, state) {
         if (state is SettingsSuccess) {
-          final platformNameList = state.platformList.map((platform) => platform.name);
+          final platformNameList = state.platformList.map(
+            (platform) => platform.name,
+          );
           if (platformNameList.isNotEmpty) {
-            _platformComboBox.controller.setup(state.settings.defaultPlatform, platformNameList);
+            _platformComboBox.controller.setup(
+              state.settings.defaultPlatform,
+              platformNameList,
+            );
             return FormDialog(
               formKey: _formKey,
-              title: _isEdit() ? LocaleKeys.entriesEdit.tr() : LocaleKeys.entriesAdd.tr(),
+              title: _isEdit()
+                  ? LocaleKeys.entriesEdit.tr()
+                  : LocaleKeys.entriesAdd.tr(),
               actions: [
                 Button(
                   onPressed: () => Navigator.pop(context),
@@ -95,11 +105,20 @@ class _EntryListChangeState extends State<EntryListChange> {
     if (_formKey.currentState!.validate()) {
       var cubit = context.read<EntryListCubit>();
       if (_isEdit()) {
-        cubit.edit(widget.entry!, _productInputField.controller.text, _keyInputField.controller.text, _platformComboBox.controller.value,
-            _tagInputField.controller.text);
+        cubit.edit(
+          widget.entry!,
+          _productInputField.controller.text,
+          _keyInputField.controller.text,
+          _platformComboBox.controller.value,
+          _tagInputField.controller.text,
+        );
       } else {
         cubit.add(
-            _productInputField.controller.text, _keyInputField.controller.text, _platformComboBox.controller.value, _tagInputField.controller.text);
+          _productInputField.controller.text,
+          _keyInputField.controller.text,
+          _platformComboBox.controller.value,
+          _tagInputField.controller.text,
+        );
       }
       Navigator.pop(context);
     }

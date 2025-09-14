@@ -34,9 +34,7 @@ class _UiSettingsState extends State<UiSettings> {
       builder: (BuildContext context, RootState state) {
         if (state is RootSuccess) {
           return ScaffoldPage(
-            header: PageHeader(
-              title: Text(LocaleKeys.ui.tr()),
-            ),
+            header: PageHeader(title: Text(LocaleKeys.ui.tr())),
             content: Center(
               child: ConstraintWidthContainer(
                 child: Padding(
@@ -64,7 +62,9 @@ class _UiSettingsState extends State<UiSettings> {
 
   void _setupBoxes() {
     _languageComboBox = FormComboBox(onChanged: _changeLanguageSelection);
-    final currentLanguage = getUserVisibleLocaleString(context.locale.languageCode);
+    final currentLanguage = getUserVisibleLocaleString(
+      context.locale.languageCode,
+    );
     _languageComboBox.controller.setup(currentLanguage, kLocales.keys);
     _themeComboBox = FormComboBox(onChanged: _changeThemeSelection);
     final currentBrightness = context.read<RootBloc>().theme.key.tr();

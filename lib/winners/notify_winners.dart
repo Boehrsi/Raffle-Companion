@@ -96,7 +96,11 @@ class _NotifyWinnersState extends State<NotifyWinners> {
                           children: [
                             if (_infoBarText.isNotEmpty)
                               InfoBar(
-                                title: Text(_infoBarSeverity == InfoBarSeverity.error ? LocaleKeys.error.tr() : LocaleKeys.info.tr()),
+                                title: Text(
+                                  _infoBarSeverity == InfoBarSeverity.error
+                                      ? LocaleKeys.error.tr()
+                                      : LocaleKeys.info.tr(),
+                                ),
                                 content: Text(_infoBarText),
                                 severity: _infoBarSeverity,
                                 onClose: () {
@@ -115,7 +119,8 @@ class _NotifyWinnersState extends State<NotifyWinners> {
                               primary: false,
                               itemCount: _mailInputFieldList.length,
                               itemBuilder: (context, index) {
-                                final mailInputField = _mailInputFieldList[index];
+                                final mailInputField =
+                                    _mailInputFieldList[index];
                                 final keyInputField = _keyInputFieldList[index];
                                 return WinnerRow(
                                   mailInputField: mailInputField,
@@ -145,14 +150,16 @@ class _NotifyWinnersState extends State<NotifyWinners> {
     final state = context.read<EntryListCubit>().state;
     if (state is EntryListSuccess) {
       for (Entry entry in state.selectedList) {
-        _mailInputFieldList.add(FormTextBox(
-          label: LocaleKeys.mail.tr(),
-          validator: validatorNotEmpty,
-        ));
-        _keyInputFieldList.add(FormTextBox(
-          label: entry.name,
-          validator: validatorNotEmpty,
-        )..controller.text = entry.key ?? '');
+        _mailInputFieldList.add(
+          FormTextBox(
+            label: LocaleKeys.mail.tr(),
+            validator: validatorNotEmpty,
+          ),
+        );
+        _keyInputFieldList.add(
+          FormTextBox(label: entry.name, validator: validatorNotEmpty)
+            ..controller.text = entry.key ?? '',
+        );
         _platformList.add(entry.platform);
       }
     }
@@ -161,8 +168,13 @@ class _NotifyWinnersState extends State<NotifyWinners> {
   void _setupMailPresetBox() {
     final state = context.read<SettingsCubit>().state;
     if (state is SettingsSuccess) {
-      final mailPresetNameList = state.mailPresetList.map((mailPreset) => mailPreset.name);
-      _mailPresetComboBox.controller.setup(state.settings.defaultMailPreset, mailPresetNameList);
+      final mailPresetNameList = state.mailPresetList.map(
+        (mailPreset) => mailPreset.name,
+      );
+      _mailPresetComboBox.controller.setup(
+        state.settings.defaultMailPreset,
+        mailPresetNameList,
+      );
     }
   }
 
@@ -180,8 +192,18 @@ class _NotifyWinnersState extends State<NotifyWinners> {
       final raffleUrl = _urlInputField.controller.text;
       final mailSubject = _subjectInputField.controller.text;
       final mailPresetSelection = _mailPresetComboBox.controller.value;
-      final mailPreset = mailPresetList.firstWhere((element) => element.name == mailPresetSelection);
-      await sendMails(_mailInputFieldList, _keyInputFieldList, _platformList, raffleName, raffleUrl, mailSubject, mailPreset.text);
+      final mailPreset = mailPresetList.firstWhere(
+        (element) => element.name == mailPresetSelection,
+      );
+      await sendMails(
+        _mailInputFieldList,
+        _keyInputFieldList,
+        _platformList,
+        raffleName,
+        raffleUrl,
+        mailSubject,
+        mailPreset.text,
+      );
     }
   }
 

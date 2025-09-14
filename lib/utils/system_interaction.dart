@@ -10,7 +10,11 @@ import '../widgets/input.dart';
 import 'text.dart';
 
 Future<bool> canSend() async {
-  final uri = Uri(scheme: 'mailto', path: "test@mail.com", queryParameters: {'subject': 'subject=subject', 'body': 'body'});
+  final uri = Uri(
+    scheme: 'mailto',
+    path: "test@mail.com",
+    queryParameters: {'subject': 'subject=subject', 'body': 'body'},
+  );
   return await canLaunchUrl(uri);
 }
 
@@ -30,8 +34,20 @@ Future<void> sendMails(
     final key = keyInputFieldList[index].controller.text;
     final platform = platformList[index];
 
-    final uri = setupSendUrl(mail, mailSubject, mailPreset, raffleName, raffleUrl, game, key, platform);
-    await Future.delayed(Duration(milliseconds: index == 0 ? 0 : 500), () => launchUrl(uri));
+    final uri = setupSendUrl(
+      mail,
+      mailSubject,
+      mailPreset,
+      raffleName,
+      raffleUrl,
+      game,
+      key,
+      platform,
+    );
+    await Future.delayed(
+      Duration(milliseconds: index == 0 ? 0 : 500),
+      () => launchUrl(uri),
+    );
   });
 }
 
@@ -39,7 +55,10 @@ Future<void> sendFeedbackMail(String version) async {
   final uri = Uri(
     scheme: 'mailto',
     path: "rafflecompanion@boehrsi.de",
-    query: sprintf(kSendMailQuery, ['Raffle Companion feedback', '${LocaleKeys.infoVersion.tr()}: $version\n\n']),
+    query: sprintf(kSendMailQuery, [
+      'Raffle Companion feedback',
+      '${LocaleKeys.infoVersion.tr()}: $version\n\n',
+    ]),
   );
   await launchUrl(uri);
 }

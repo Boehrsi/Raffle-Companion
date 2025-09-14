@@ -11,7 +11,8 @@ import 'settings_state.dart';
 
 class SettingsCubit extends Cubit<SettingsState> {
   final mailPresetListFilePath = RaffleFile.mailPreset.getFilePath();
-  final defaultMailPresetListFilePath = RaffleFile.mailPreset.getDefaultFilePath();
+  final defaultMailPresetListFilePath = RaffleFile.mailPreset
+      .getDefaultFilePath();
   final platformListFilePath = RaffleFile.platforms.getFilePath();
   final defaultPlatformListFilePath = RaffleFile.platforms.getDefaultFilePath();
   final settingsFilePath = RaffleFile.settings.getFilePath();
@@ -40,14 +41,20 @@ class SettingsCubit extends Cubit<SettingsState> {
     final settingsJson = jsonDecode(settingsString);
     final settings = Settings.fromJson(settingsJson);
 
-    emit(SettingsSuccess(
-      mailPresetList: mailPresetList,
-      platformList: platformList,
-      settings: settings,
-    ));
+    emit(
+      SettingsSuccess(
+        mailPresetList: mailPresetList,
+        platformList: platformList,
+        settings: settings,
+      ),
+    );
   }
 
-  Future<void> changeMailPreset(String name, String newName, String text) async {
+  Future<void> changeMailPreset(
+    String name,
+    String newName,
+    String text,
+  ) async {
     final mailPresetList = _settingsSuccess.mailPresetList;
     final mailPreset = _getMailPreset(name);
     if (mailPreset == null) {
@@ -56,9 +63,15 @@ class SettingsCubit extends Cubit<SettingsState> {
       mailPreset.name = newName;
       mailPreset.text = text;
     }
-    mailPresetList.sort((first, second) => first.name.toLowerCase().compareTo(second.name.toLowerCase()));
+    mailPresetList.sort(
+      (first, second) =>
+          first.name.toLowerCase().compareTo(second.name.toLowerCase()),
+    );
     await saveData(mailPresetListFilePath, mailPresetList);
-    final newSuccessState = await fixSettingsIfInvalid(_settingsSuccess.copyWith(mailPresetList: mailPresetList), newPresetName: newName);
+    final newSuccessState = await fixSettingsIfInvalid(
+      _settingsSuccess.copyWith(mailPresetList: mailPresetList),
+      newPresetName: newName,
+    );
     emit(newSuccessState);
   }
 
@@ -68,7 +81,9 @@ class SettingsCubit extends Cubit<SettingsState> {
       final mailPresetList = _settingsSuccess.mailPresetList;
       mailPresetList.remove(mailPreset);
       await saveData(mailPresetListFilePath, mailPresetList);
-      final newSuccessState = await fixSettingsIfInvalid(_settingsSuccess.copyWith(mailPresetList: mailPresetList));
+      final newSuccessState = await fixSettingsIfInvalid(
+        _settingsSuccess.copyWith(mailPresetList: mailPresetList),
+      );
       emit(newSuccessState);
     }
   }
@@ -81,9 +96,15 @@ class SettingsCubit extends Cubit<SettingsState> {
     } else {
       platform.name = newName;
     }
-    platformList.sort((first, second) => first.name.toLowerCase().compareTo(second.name.toLowerCase()));
+    platformList.sort(
+      (first, second) =>
+          first.name.toLowerCase().compareTo(second.name.toLowerCase()),
+    );
     await saveData(platformListFilePath, platformList);
-    final newSuccessState = await fixSettingsIfInvalid(_settingsSuccess.copyWith(platformList: platformList), newPlatformName: newName);
+    final newSuccessState = await fixSettingsIfInvalid(
+      _settingsSuccess.copyWith(platformList: platformList),
+      newPlatformName: newName,
+    );
     emit(newSuccessState);
   }
 
@@ -93,20 +114,26 @@ class SettingsCubit extends Cubit<SettingsState> {
       final platformList = _settingsSuccess.platformList;
       platformList.remove(platform);
       await saveData(platformListFilePath, platformList);
-      final newSuccessState = await fixSettingsIfInvalid(_settingsSuccess.copyWith(platformList: platformList));
+      final newSuccessState = await fixSettingsIfInvalid(
+        _settingsSuccess.copyWith(platformList: platformList),
+      );
       emit(newSuccessState);
     }
   }
 
   Future<void> restorePlatforms() async {
     final platformList = <Platform>[];
-    final platformListString = await loadFileAsString(defaultPlatformListFilePath);
+    final platformListString = await loadFileAsString(
+      defaultPlatformListFilePath,
+    );
     List<dynamic> platformListJson = jsonDecode(platformListString);
     for (var platformJson in platformListJson) {
       platformList.add(Platform.fromJson(platformJson));
     }
     await saveData(platformListFilePath, platformList);
-    final newSuccessState = await fixSettingsIfInvalid(_settingsSuccess.copyWith(platformList: platformList));
+    final newSuccessState = await fixSettingsIfInvalid(
+      _settingsSuccess.copyWith(platformList: platformList),
+    );
     emit(newSuccessState);
   }
 
@@ -118,13 +145,17 @@ class SettingsCubit extends Cubit<SettingsState> {
 
   Future<void> restoreMailPresets() async {
     final mailPresetList = <MailPreset>[];
-    final mailPresetListString = await loadFileAsString(defaultMailPresetListFilePath);
+    final mailPresetListString = await loadFileAsString(
+      defaultMailPresetListFilePath,
+    );
     List<dynamic> mailPresetJsonList = jsonDecode(mailPresetListString);
     for (var mailPreset in mailPresetJsonList) {
       mailPresetList.add(MailPreset.fromJson(mailPreset));
     }
     await saveData(mailPresetListFilePath, mailPresetList);
-    final newSuccessState = await fixSettingsIfInvalid(_settingsSuccess.copyWith(mailPresetList: mailPresetList));
+    final newSuccessState = await fixSettingsIfInvalid(
+      _settingsSuccess.copyWith(mailPresetList: mailPresetList),
+    );
     emit(newSuccessState);
   }
 
@@ -134,13 +165,26 @@ class SettingsCubit extends Cubit<SettingsState> {
     emit(_settingsSuccess.copyWith(settings: settings));
   }
 
-  Future<SettingsSuccess> fixSettingsIfInvalid(SettingsSuccess state, {String? newPlatformName, String? newPresetName}) async {
-    final defaultPlatformValid = state.platformList.any((platform) => platform.name == state.settings.defaultPlatform);
-    final defaultMailPresetValid = state.mailPresetList.any((preset) => preset.name == state.settings.defaultMailPreset);
+  Future<SettingsSuccess> fixSettingsIfInvalid(
+    SettingsSuccess state, {
+    String? newPlatformName,
+    String? newPresetName,
+  }) async {
+    final defaultPlatformValid = state.platformList.any(
+      (platform) => platform.name == state.settings.defaultPlatform,
+    );
+    final defaultMailPresetValid = state.mailPresetList.any(
+      (preset) => preset.name == state.settings.defaultMailPreset,
+    );
     var wasInvalidDataFixed = !defaultPlatformValid || !defaultMailPresetValid;
     final settings = state.settings.copyWith(
-        defaultPlatform: !defaultPlatformValid ? newPlatformName ?? state.platformList.first.name : null,
-        defaultMailPreset: !defaultMailPresetValid ? newPresetName ?? state.mailPresetList.first.name : null);
+      defaultPlatform: !defaultPlatformValid
+          ? newPlatformName ?? state.platformList.first.name
+          : null,
+      defaultMailPreset: !defaultMailPresetValid
+          ? newPresetName ?? state.mailPresetList.first.name
+          : null,
+    );
     if (wasInvalidDataFixed) {
       await saveData(settingsFilePath, settings);
     }
@@ -149,13 +193,17 @@ class SettingsCubit extends Cubit<SettingsState> {
 
   MailPreset? _getMailPreset(String name) {
     final mailPresetList = _settingsSuccess.mailPresetList;
-    final mailPresetMatcher = mailPresetList.where((mailPreset) => mailPreset.name == name);
+    final mailPresetMatcher = mailPresetList.where(
+      (mailPreset) => mailPreset.name == name,
+    );
     return mailPresetMatcher.length == 1 ? mailPresetMatcher.first : null;
   }
 
   Platform? _getPlatform(String name) {
     final platformList = _settingsSuccess.platformList;
-    final platformMatcher = platformList.where((platform) => platform.name == name);
+    final platformMatcher = platformList.where(
+      (platform) => platform.name == name,
+    );
     return platformMatcher.length == 1 ? platformMatcher.first : null;
   }
 }

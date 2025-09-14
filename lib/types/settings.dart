@@ -9,7 +9,8 @@ class Settings {
 
   Settings({required this.defaultPlatform, required this.defaultMailPreset});
 
-  factory Settings.fromJson(Map<String, dynamic> json) => _$SettingsFromJson(json);
+  factory Settings.fromJson(Map<String, dynamic> json) =>
+      _$SettingsFromJson(json);
 
   Map<String, dynamic> toJson() => _$SettingsToJson(this);
 

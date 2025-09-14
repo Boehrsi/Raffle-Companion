@@ -16,7 +16,12 @@ class Entry {
 
   Map<String, dynamic> toJson() => _$EntryToJson(this);
 
-  bool equals(Entry entry) => name == entry.name && key == entry.key && platform == entry.platform && used == entry.used && tag == entry.tag;
+  bool equals(Entry entry) =>
+      name == entry.name &&
+      key == entry.key &&
+      platform == entry.platform &&
+      used == entry.used &&
+      tag == entry.tag;
 }
 
 extension EntryList on List<Entry> {

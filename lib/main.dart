@@ -62,7 +62,10 @@ class RaffleCompanion extends StatelessWidget {
       providers: [
         BlocProvider.value(value: rootCubit),
         BlocProvider(create: (BuildContext context) => EntryListCubit()),
-        BlocProvider(create: (context) => SettingsCubit()..loadSettings(), lazy: false),
+        BlocProvider(
+          create: (context) => SettingsCubit()..loadSettings(),
+          lazy: false,
+        ),
         BlocProvider(create: (context) => InfoCubit()),
         BlocProvider(create: (context) => ToolsCubit()),
       ],

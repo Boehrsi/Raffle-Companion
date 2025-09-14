@@ -9,7 +9,8 @@ class MailPreset {
 
   MailPreset(this.name, this.text);
 
-  factory MailPreset.fromJson(Map<String, dynamic> json) => _$MailPresetFromJson(json);
+  factory MailPreset.fromJson(Map<String, dynamic> json) =>
+      _$MailPresetFromJson(json);
 
   Map<String, dynamic> toJson() => _$MailPresetToJson(this);
 }

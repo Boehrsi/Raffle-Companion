@@ -10,9 +10,19 @@ class EntryListSuccess extends EntryListState {
   final String searchTerm;
   final bool used;
 
-  EntryListSuccess({required this.entryList, required this.selectedList, required this.searchTerm, required this.used});
+  EntryListSuccess({
+    required this.entryList,
+    required this.selectedList,
+    required this.searchTerm,
+    required this.used,
+  });
 
-  EntryListSuccess copyWith({List<Entry>? entryList, List<Entry>? selectedList, String? searchTerm, bool? used}) {
+  EntryListSuccess copyWith({
+    List<Entry>? entryList,
+    List<Entry>? selectedList,
+    String? searchTerm,
+    bool? used,
+  }) {
     return EntryListSuccess(
       entryList: entryList ?? this.entryList,
       selectedList: selectedList ?? this.selectedList,

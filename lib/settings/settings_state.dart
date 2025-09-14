@@ -11,9 +11,17 @@ class SettingsSuccess extends SettingsState {
   List<Platform> platformList;
   Settings settings;
 
-  SettingsSuccess({required this.mailPresetList, required this.platformList, required this.settings});
+  SettingsSuccess({
+    required this.mailPresetList,
+    required this.platformList,
+    required this.settings,
+  });
 
-  SettingsSuccess copyWith({List<MailPreset>? mailPresetList, List<Platform>? platformList, Settings? settings}) {
+  SettingsSuccess copyWith({
+    List<MailPreset>? mailPresetList,
+    List<Platform>? platformList,
+    Settings? settings,
+  }) {
     return SettingsSuccess(
       mailPresetList: mailPresetList ?? this.mailPresetList,
       platformList: platformList ?? this.platformList,

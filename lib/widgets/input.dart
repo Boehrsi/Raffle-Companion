@@ -100,12 +100,11 @@ class _FormComboBoxState extends State<FormComboBox> {
           return ComboBox<String>(
             isExpanded: true,
             value: value.toString(),
-            onChanged: widget.onChanged ?? (String? newValue) => controller.value = newValue!,
+            onChanged:
+                widget.onChanged ??
+                (String? newValue) => controller.value = newValue!,
             items: controller._items.map<ComboBoxItem<String>>((String value) {
-              return ComboBoxItem<String>(
-                value: value,
-                child: Text(value),
-              );
+              return ComboBoxItem<String>(value: value, child: Text(value));
             }).toList(),
           );
         },
@@ -118,7 +117,11 @@ class ConstraintWidthInput extends StatelessWidget {
   final Widget child;
   final double maxWidth;
 
-  const ConstraintWidthInput({required this.child, this.maxWidth = 300.0, super.key});
+  const ConstraintWidthInput({
+    required this.child,
+    this.maxWidth = 300.0,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

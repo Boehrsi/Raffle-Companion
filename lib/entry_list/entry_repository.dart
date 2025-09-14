@@ -21,7 +21,11 @@ class EntryRepository {
   EntryRepository._internal();
 
   List<Entry> getEntryList({bool used = false, String searchTerm = ''}) =>
-      _entryList.where((entry) => entry.used == used && _matchesSearch(searchTerm, entry)).toList();
+      _entryList
+          .where(
+            (entry) => entry.used == used && _matchesSearch(searchTerm, entry),
+          )
+          .toList();
 
   void addEntry(Entry addEntry) {
     _entryList.add(addEntry);
@@ -29,7 +33,14 @@ class EntryRepository {
     _logger.add(Action.add, addEntry);
   }
 
-  void editEntry(Entry editEntry, {String? name, String? key, String? platform, bool? used, String? tag}) {
+  void editEntry(
+    Entry editEntry, {
+    String? name,
+    String? key,
+    String? platform,
+    bool? used,
+    String? tag,
+  }) {
     if (name != null) {
       editEntry.name = name;
     }
@@ -53,7 +64,8 @@ class EntryRepository {
     _logger.add(Action.delete, deleteEntry);
   }
 
-  Future<void> persistData() async => await saveData(_entryListFilePath, _entryList);
+  Future<void> persistData() async =>
+      await saveData(_entryListFilePath, _entryList);
 
   Future<void> loadData() async {
     final content = await loadFileAsString(_entryListFilePath);
@@ -74,6 +86,9 @@ class EntryRepository {
   }
 
   void _sortEntryList() {
-    _entryList.sort((first, second) => first.name.toLowerCase().compareTo(second.name.toLowerCase()));
+    _entryList.sort(
+      (first, second) =>
+          first.name.toLowerCase().compareTo(second.name.toLowerCase()),
+    );
   }
 }

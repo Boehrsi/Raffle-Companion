@@ -21,7 +21,10 @@ class PlatformSettings extends StatefulWidget {
 
 class _PlatformSettingsState extends State<PlatformSettings> {
   final _formKey = GlobalKey<FormState>();
-  final _nameInputField = FormTextBox(label: LocaleKeys.platform.tr(), validator: validatorNotEmpty);
+  final _nameInputField = FormTextBox(
+    label: LocaleKeys.platform.tr(),
+    validator: validatorNotEmpty,
+  );
   late FormComboBox _platformComboBox;
 
   @override
@@ -73,7 +76,10 @@ class _PlatformSettingsState extends State<PlatformSettings> {
                               return PlatformTile(
                                 name: state.platformList[index].name,
                                 onChange: _changePlatformDialog,
-                                onDelete: (name) => _deletePlatformDialog(name, state.platformList.length),
+                                onDelete: (name) => _deletePlatformDialog(
+                                  name,
+                                  state.platformList.length,
+                                ),
                               );
                             },
                             separatorBuilder: (context, index) {
@@ -86,7 +92,8 @@ class _PlatformSettingsState extends State<PlatformSettings> {
                           ),
                         ),
                       ],
-                      if (state.platformList.isEmpty) Center(child: Text(LocaleKeys.entriesEmpty.tr())),
+                      if (state.platformList.isEmpty)
+                        Center(child: Text(LocaleKeys.entriesEmpty.tr())),
                     ],
                   ),
                 ),
@@ -101,9 +108,11 @@ class _PlatformSettingsState extends State<PlatformSettings> {
   }
 
   void _setupPlatformBox() {
-    _platformComboBox = FormComboBox(onChanged: (value) {
-      if (value != null) _changeDefaultSelection(value);
-    });
+    _platformComboBox = FormComboBox(
+      onChanged: (value) {
+        if (value != null) _changeDefaultSelection(value);
+      },
+    );
     final state = context.read<SettingsCubit>().state;
     if (state is SettingsSuccess) {
       final items = state.platformList.map((value) => value.name);
@@ -113,8 +122,11 @@ class _PlatformSettingsState extends State<PlatformSettings> {
 
   void _showConfirmRestoreDialog() {
     showConfirmDialog(
-            context: context, title: LocaleKeys.restore.tr(), content: LocaleKeys.platformRestoreConfirm.tr(), positiveText: LocaleKeys.restore.tr())
-        .then((bool? value) {
+      context: context,
+      title: LocaleKeys.restore.tr(),
+      content: LocaleKeys.platformRestoreConfirm.tr(),
+      positiveText: LocaleKeys.restore.tr(),
+    ).then((bool? value) {
       if (value != null && value) {
         _restoreDefaults();
       }
@@ -131,26 +143,31 @@ class _PlatformSettingsState extends State<PlatformSettings> {
       context: context,
       builder: (context) {
         return FormDialog(
-            formKey: _formKey,
-            title: isChange ? LocaleKeys.edit.tr() : LocaleKeys.add.tr(),
-            actions: [
-              Button(
-                onPressed: () => Navigator.pop(context),
-                child: Text(LocaleKeys.cancel.tr()),
-              ),
-              Button(
-                onPressed: () => _changePlatform(name),
-                child: Text(LocaleKeys.save.tr()),
-              ),
-            ],
-            child: _nameInputField);
+          formKey: _formKey,
+          title: isChange ? LocaleKeys.edit.tr() : LocaleKeys.add.tr(),
+          actions: [
+            Button(
+              onPressed: () => Navigator.pop(context),
+              child: Text(LocaleKeys.cancel.tr()),
+            ),
+            Button(
+              onPressed: () => _changePlatform(name),
+              child: Text(LocaleKeys.save.tr()),
+            ),
+          ],
+          child: _nameInputField,
+        );
       },
     );
   }
 
   void _deletePlatformDialog(String name, int entryCount) {
     if (entryCount <= 1) {
-      showInfoDialog(context: context, title: LocaleKeys.errorTitle.tr(), content: LocaleKeys.settingsCantDeleteLastEntry.tr());
+      showInfoDialog(
+        context: context,
+        title: LocaleKeys.errorTitle.tr(),
+        content: LocaleKeys.settingsCantDeleteLastEntry.tr(),
+      );
     } else {
       showConfirmDialog(
         context: context,
@@ -168,16 +185,21 @@ class _PlatformSettingsState extends State<PlatformSettings> {
   void _changePlatform(String? name) {
     final currentName = name ?? _nameInputField.controller.text;
     if (_formKey.currentState!.validate()) {
-      context.read<SettingsCubit>().changePlatform(currentName, _nameInputField.controller.text);
+      context.read<SettingsCubit>().changePlatform(
+        currentName,
+        _nameInputField.controller.text,
+      );
       Navigator.pop(context);
     }
   }
 
-  void _deletePlatform(String name) => context.read<SettingsCubit>().deletePlatform(name);
+  void _deletePlatform(String name) =>
+      context.read<SettingsCubit>().deletePlatform(name);
 
   void _restoreDefaults() => context.read<SettingsCubit>().restorePlatforms();
 
-  void _changeDefaultSelection(String name) => context.read<SettingsCubit>().changePlatformDefaultSelection(name);
+  void _changeDefaultSelection(String name) =>
+      context.read<SettingsCubit>().changePlatformDefaultSelection(name);
 }
 
 class PlatformTile extends StatelessWidget {
@@ -185,7 +207,12 @@ class PlatformTile extends StatelessWidget {
   final OnPlatformChange onChange;
   final OnPlatformDelete onDelete;
 
-  const PlatformTile({super.key, required this.name, required this.onChange, required this.onDelete});
+  const PlatformTile({
+    super.key,
+    required this.name,
+    required this.onChange,
+    required this.onDelete,
+  });
 
   @override
   Widget build(BuildContext context) {

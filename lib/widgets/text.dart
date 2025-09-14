@@ -11,10 +11,7 @@ class LargeLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 16.0, right: 12.0, bottom: 8.0),
-      child: Text(
-        label,
-        style: context.textStyleSubtitle,
-      ),
+      child: Text(label, style: context.textStyleSubtitle),
     );
   }
 }

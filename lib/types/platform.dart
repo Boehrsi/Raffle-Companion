@@ -8,7 +8,8 @@ class Platform {
 
   Platform(this.name);
 
-  factory Platform.fromJson(Map<String, dynamic> json) => _$PlatformFromJson(json);
+  factory Platform.fromJson(Map<String, dynamic> json) =>
+      _$PlatformFromJson(json);
 
   Map<String, dynamic> toJson() => _$PlatformToJson(this);
 }

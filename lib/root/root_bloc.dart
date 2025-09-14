@@ -18,7 +18,9 @@ class RootBloc extends Bloc<RootEvent, RootState> {
 
   MapEntry<String, Brightness> get theme {
     final currentState = state;
-    final filter = (currentState is RootSuccess ? currentState.config.theme : null) ?? LocaleKeys.uiDark;
+    final filter =
+        (currentState is RootSuccess ? currentState.config.theme : null) ??
+        LocaleKeys.uiDark;
     return kThemes.entries.firstWhere((element) => element.key == filter);
   }
 
@@ -56,7 +58,9 @@ class RootBloc extends Bloc<RootEvent, RootState> {
   Future<void> _setTheme(SetTheme event, emit) async {
     final currentState = state;
     if (currentState is RootSuccess) {
-      final theme = kThemes.entries.firstWhere((element) => element.key.tr() == event.theme);
+      final theme = kThemes.entries.firstWhere(
+        (element) => element.key.tr() == event.theme,
+      );
       final config = currentState.config.copyWith(theme: theme.key);
       await _persistConfig(config);
       emit(RootSuccess(config));

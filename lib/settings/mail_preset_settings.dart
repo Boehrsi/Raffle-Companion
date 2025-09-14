@@ -22,8 +22,15 @@ class MailPresetSettings extends StatefulWidget {
 
 class _MailPresetSettingsState extends State<MailPresetSettings> {
   final _formKey = GlobalKey<FormState>();
-  final _nameInputField = FormTextBox(label: LocaleKeys.name.tr(), validator: validatorNotEmpty);
-  final _textInputField = FormTextBox(label: LocaleKeys.text.tr(), validator: _getPresetTextValidator, multiLine: true);
+  final _nameInputField = FormTextBox(
+    label: LocaleKeys.name.tr(),
+    validator: validatorNotEmpty,
+  );
+  final _textInputField = FormTextBox(
+    label: LocaleKeys.text.tr(),
+    validator: _getPresetTextValidator,
+    multiLine: true,
+  );
   late FormComboBox _mailPresetComboBox;
 
   @override
@@ -76,7 +83,10 @@ class _MailPresetSettingsState extends State<MailPresetSettings> {
                                 name: state.mailPresetList[index].name,
                                 text: state.mailPresetList[index].text,
                                 onChange: _changeMailPresetDialog,
-                                onDelete: (name) => _deleteMailPresetDialog(name, state.mailPresetList.length),
+                                onDelete: (name) => _deleteMailPresetDialog(
+                                  name,
+                                  state.mailPresetList.length,
+                                ),
                               );
                             },
                             separatorBuilder: (context, index) {
@@ -89,7 +99,8 @@ class _MailPresetSettingsState extends State<MailPresetSettings> {
                           ),
                         ),
                       ],
-                      if (state.mailPresetList.isEmpty) Center(child: Text(LocaleKeys.entriesEmpty.tr())),
+                      if (state.mailPresetList.isEmpty)
+                        Center(child: Text(LocaleKeys.entriesEmpty.tr())),
                     ],
                   ),
                 ),
@@ -104,13 +115,18 @@ class _MailPresetSettingsState extends State<MailPresetSettings> {
   }
 
   void _setupMailPresetBox() {
-    _mailPresetComboBox = FormComboBox(onChanged: (value) {
-      if (value != null) _changeDefaultSelection(value);
-    });
+    _mailPresetComboBox = FormComboBox(
+      onChanged: (value) {
+        if (value != null) _changeDefaultSelection(value);
+      },
+    );
     final state = context.read<SettingsCubit>().state;
     if (state is SettingsSuccess) {
       final items = state.mailPresetList.map((value) => value.name);
-      _mailPresetComboBox.controller.setup(state.settings.defaultMailPreset, items);
+      _mailPresetComboBox.controller.setup(
+        state.settings.defaultMailPreset,
+        items,
+      );
     }
   }
 
@@ -150,7 +166,7 @@ class _MailPresetSettingsState extends State<MailPresetSettings> {
                   LocaleKeys.presetMustContain.tr(),
                   style: context.textStyleBody,
                 ),
-              )
+              ),
             ],
           ),
         );
@@ -160,8 +176,11 @@ class _MailPresetSettingsState extends State<MailPresetSettings> {
 
   void _showConfirmRestoreDialog() {
     showConfirmDialog(
-            context: context, title: LocaleKeys.restore.tr(), content: LocaleKeys.presetRestoreConfirm.tr(), positiveText: LocaleKeys.restore.tr())
-        .then((bool? value) {
+      context: context,
+      title: LocaleKeys.restore.tr(),
+      content: LocaleKeys.presetRestoreConfirm.tr(),
+      positiveText: LocaleKeys.restore.tr(),
+    ).then((bool? value) {
       if (value != null && value) {
         restoreDefaults();
       }
@@ -170,14 +189,18 @@ class _MailPresetSettingsState extends State<MailPresetSettings> {
 
   void _deleteMailPresetDialog(String name, int entryCount) {
     if (entryCount <= 1) {
-      showInfoDialog(context: context, title: LocaleKeys.errorTitle.tr(), content: LocaleKeys.settingsCantDeleteLastEntry.tr());
+      showInfoDialog(
+        context: context,
+        title: LocaleKeys.errorTitle.tr(),
+        content: LocaleKeys.settingsCantDeleteLastEntry.tr(),
+      );
     } else {
       showConfirmDialog(
-              context: context,
-              title: LocaleKeys.delete.tr(),
-              content: LocaleKeys.presetDeleteConfirm.tr(args: [name]),
-              positiveText: LocaleKeys.delete.tr())
-          .then((shouldDelete) {
+        context: context,
+        title: LocaleKeys.delete.tr(),
+        content: LocaleKeys.presetDeleteConfirm.tr(args: [name]),
+        positiveText: LocaleKeys.delete.tr(),
+      ).then((shouldDelete) {
         if (shouldDelete == true) {
           _deleteMailPreset(name);
         }
@@ -188,16 +211,22 @@ class _MailPresetSettingsState extends State<MailPresetSettings> {
   void _changeMailPreset(String? name) {
     final currentName = name ?? _nameInputField.controller.text;
     if (_formKey.currentState!.validate()) {
-      context.read<SettingsCubit>().changeMailPreset(currentName, _nameInputField.controller.text, _textInputField.controller.text);
+      context.read<SettingsCubit>().changeMailPreset(
+        currentName,
+        _nameInputField.controller.text,
+        _textInputField.controller.text,
+      );
       Navigator.pop(context);
     }
   }
 
-  void _deleteMailPreset(String name) => context.read<SettingsCubit>().deleteMailPreset(name);
+  void _deleteMailPreset(String name) =>
+      context.read<SettingsCubit>().deleteMailPreset(name);
 
   void restoreDefaults() => context.read<SettingsCubit>().restoreMailPresets();
 
-  void _changeDefaultSelection(String name) => context.read<SettingsCubit>().changeMailPresetDefaultSelection(name);
+  void _changeDefaultSelection(String name) =>
+      context.read<SettingsCubit>().changeMailPresetDefaultSelection(name);
 }
 
 class MailPresetTile extends StatelessWidget {
@@ -206,7 +235,13 @@ class MailPresetTile extends StatelessWidget {
   final OnMailPresetChange onChange;
   final OnMailPresetDelete onDelete;
 
-  const MailPresetTile({super.key, required this.name, required this.text, required this.onChange, required this.onDelete});
+  const MailPresetTile({
+    super.key,
+    required this.name,
+    required this.text,
+    required this.onChange,
+    required this.onDelete,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -234,7 +269,10 @@ class MailPresetTile extends StatelessWidget {
 String? _getPresetTextValidator(String? value) {
   if (value == null || value.isEmpty) {
     return LocaleKeys.errorNotEmpty.tr();
-  } else if (!value.contains('%RAFFLE_NAME%') || !value.contains('%RAFFLE_URL%') || !value.contains('%PRODUCT%') || !value.contains('%KEY%')) {
+  } else if (!value.contains('%RAFFLE_NAME%') ||
+      !value.contains('%RAFFLE_URL%') ||
+      !value.contains('%PRODUCT%') ||
+      !value.contains('%KEY%')) {
     return LocaleKeys.errorPresetMustContain.tr();
   }
   return null;

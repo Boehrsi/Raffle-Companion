@@ -28,11 +28,31 @@ class _DateToolsState extends State<DateTools> {
   @override
   void initState() {
     super.initState();
-    dayInputField = FormTextBox(label: LocaleKeys.day.tr(), inputFormatters: numberInputFormatter, onChanged: _changeDate);
-    weekInputField = FormTextBox(label: LocaleKeys.week.tr(), inputFormatters: numberInputFormatter, onChanged: _changeDate);
-    monthInputField = FormTextBox(label: LocaleKeys.month.tr(), inputFormatters: numberInputFormatter, onChanged: _changeDate);
-    hoursInputField = FormTextBox(label: LocaleKeys.hours.tr(), inputFormatters: numberInputFormatter, onChanged: _changeDate);
-    minutesInputField = FormTextBox(label: LocaleKeys.minutes.tr(), inputFormatters: numberInputFormatter, onChanged: _changeDate);
+    dayInputField = FormTextBox(
+      label: LocaleKeys.day.tr(),
+      inputFormatters: numberInputFormatter,
+      onChanged: _changeDate,
+    );
+    weekInputField = FormTextBox(
+      label: LocaleKeys.week.tr(),
+      inputFormatters: numberInputFormatter,
+      onChanged: _changeDate,
+    );
+    monthInputField = FormTextBox(
+      label: LocaleKeys.month.tr(),
+      inputFormatters: numberInputFormatter,
+      onChanged: _changeDate,
+    );
+    hoursInputField = FormTextBox(
+      label: LocaleKeys.hours.tr(),
+      inputFormatters: numberInputFormatter,
+      onChanged: _changeDate,
+    );
+    minutesInputField = FormTextBox(
+      label: LocaleKeys.minutes.tr(),
+      inputFormatters: numberInputFormatter,
+      onChanged: _changeDate,
+    );
   }
 
   @override
@@ -47,11 +67,10 @@ class _DateToolsState extends State<DateTools> {
       builder: (BuildContext context, ToolsState state) {
         if (state is ToolsSuccess) {
           final text = formatDateTime(state.formattedFuture);
-          final timeStamp = state.formattedFuture.millisecondsSinceEpoch.toString();
+          final timeStamp = state.formattedFuture.millisecondsSinceEpoch
+              .toString();
           return ScaffoldPage(
-            header: PageHeader(
-              title: Text(LocaleKeys.date.tr()),
-            ),
+            header: PageHeader(title: Text(LocaleKeys.date.tr())),
             content: SingleChildScrollView(
               child: Center(
                 child: ConstraintWidthContainer(
@@ -61,7 +80,9 @@ class _DateToolsState extends State<DateTools> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         LargeLabel(label: LocaleKeys.toolsDateSetOffset.tr()),
-                        InfoLabel(label: LocaleKeys.toolsDateSetOffsetInfo.tr()),
+                        InfoLabel(
+                          label: LocaleKeys.toolsDateSetOffsetInfo.tr(),
+                        ),
                         Padding(
                           padding: const EdgeInsets.only(top: 8.0),
                           child: Row(
@@ -132,13 +153,16 @@ class _DateToolsState extends State<DateTools> {
                                 ),
                                 Text(text),
                                 Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 8.0,
+                                  ),
                                   child: IconButton(
-                                      icon: const Icon(FluentIcons.copy),
-                                      onPressed: () {
-                                        copyToClipboard(text);
-                                        _showCopyInfo();
-                                      }),
+                                    icon: const Icon(FluentIcons.copy),
+                                    onPressed: () {
+                                      copyToClipboard(text);
+                                      _showCopyInfo();
+                                    },
+                                  ),
                                 ),
                               ],
                             ),
@@ -153,13 +177,16 @@ class _DateToolsState extends State<DateTools> {
                                 ),
                                 Text(timeStamp),
                                 Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 8.0,
+                                  ),
                                   child: IconButton(
-                                      icon: const Icon(FluentIcons.copy),
-                                      onPressed: () {
-                                        copyToClipboard(timeStamp);
-                                        _showCopyInfo();
-                                      }),
+                                    icon: const Icon(FluentIcons.copy),
+                                    onPressed: () {
+                                      copyToClipboard(timeStamp);
+                                      _showCopyInfo();
+                                    },
+                                  ),
                                 ),
                               ],
                             ),
@@ -185,16 +212,25 @@ class _DateToolsState extends State<DateTools> {
     final month = int.tryParse(monthInputField.controller.text);
     final hours = int.tryParse(hoursInputField.controller.text);
     final minutes = int.tryParse(minutesInputField.controller.text);
-    context.read<ToolsCubit>().loadTools(day: day, week: week, month: month, hours: hours, minutes: minutes);
+    context.read<ToolsCubit>().loadTools(
+      day: day,
+      week: week,
+      month: month,
+      hours: hours,
+      minutes: minutes,
+    );
   }
 
   Future<void> _showCopyInfo() async {
-    await displayInfoBar(context, builder: (context, close) {
-      return InfoBar(
-        title: Text(LocaleKeys.copied.tr()),
-        content: Text(LocaleKeys.clipboardSuccess.tr()),
-        severity: InfoBarSeverity.info,
-      );
-    });
+    await displayInfoBar(
+      context,
+      builder: (context, close) {
+        return InfoBar(
+          title: Text(LocaleKeys.copied.tr()),
+          content: Text(LocaleKeys.clipboardSuccess.tr()),
+          severity: InfoBarSeverity.info,
+        );
+      },
+    );
   }
 }

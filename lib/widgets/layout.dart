@@ -29,19 +29,14 @@ class AppBarTitle extends StatelessWidget {
     return DragToMoveArea(
       child: Align(
         alignment: AlignmentDirectional.centerStart,
-        child: Text(
-          text,
-          style: context.textStyleTitle,
-        ),
+        child: Text(text, style: context.textStyleTitle),
       ),
     );
   }
 }
 
 class AppBarActions extends StatelessWidget {
-  const AppBarActions({
-    super.key,
-  });
+  const AppBarActions({super.key});
 
   @override
   Widget build(BuildContext context) {

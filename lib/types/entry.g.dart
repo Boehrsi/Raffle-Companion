@@ -7,17 +7,17 @@ part of 'entry.dart';
 // **************************************************************************
 
 Entry _$EntryFromJson(Map<String, dynamic> json) => Entry(
-      json['name'] as String,
-      json['key'] as String?,
-      json['platform'] as String,
-      json['tag'] as String?,
-      json['used'] as bool? ?? false,
-    );
+  json['name'] as String,
+  json['key'] as String?,
+  json['platform'] as String,
+  json['tag'] as String?,
+  json['used'] as bool? ?? false,
+);
 
 Map<String, dynamic> _$EntryToJson(Entry instance) => <String, dynamic>{
-      'name': instance.name,
-      'key': instance.key,
-      'platform': instance.platform,
-      'used': instance.used,
-      'tag': instance.tag,
-    };
+  'name': instance.name,
+  'key': instance.key,
+  'platform': instance.platform,
+  'used': instance.used,
+  'tag': instance.tag,
+};

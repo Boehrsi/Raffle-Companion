@@ -9,8 +9,24 @@ final numberInputFormatter = [FilteringTextInputFormatter.digitsOnly];
 
 final _dateFormat = DateFormat("yyyy-MM-ddTHH:mm:ss");
 
-Uri setupSendUrl(String mail, String subject, String mailPresetText, String raffleName, String raffleUrl, String game, String key, String? platform) {
-  final body = _setupMailText(mailPresetText, raffleName, raffleUrl, game, key, platform);
+Uri setupSendUrl(
+  String mail,
+  String subject,
+  String mailPresetText,
+  String raffleName,
+  String raffleUrl,
+  String game,
+  String key,
+  String? platform,
+) {
+  final body = _setupMailText(
+    mailPresetText,
+    raffleName,
+    raffleUrl,
+    game,
+    key,
+    platform,
+  );
   return Uri(
     scheme: 'mailto',
     path: mail,
@@ -18,11 +34,13 @@ Uri setupSendUrl(String mail, String subject, String mailPresetText, String raff
   );
 }
 
-String? validatorNotEmpty(String? value) => (value == null || value.isEmpty) ? LocaleKeys.errorNotEmpty.tr() : null;
+String? validatorNotEmpty(String? value) =>
+    (value == null || value.isEmpty) ? LocaleKeys.errorNotEmpty.tr() : null;
 
 String formatDateTime(DateTime date) {
   final timezoneHours = date.timeZoneOffset.inHours;
-  final timezone = "${timezoneHours.isNegative ? "-" : "+"}${timezoneHours < 10 ? "0" : ""}$timezoneHours:00";
+  final timezone =
+      "${timezoneHours.isNegative ? "-" : "+"}${timezoneHours < 10 ? "0" : ""}$timezoneHours:00";
   return _dateFormat.format(date) + timezone;
 }
 
@@ -30,9 +48,19 @@ void copyToClipboard(String value) {
   Clipboard.setData(ClipboardData(text: value));
 }
 
-String _setupMailText(String mailPreset, String raffleName, String raffleUrl, String game, String key, String? platform) {
-  var result =
-      mailPreset.replaceAll('%RAFFLE_NAME%', raffleName).replaceAll('%RAFFLE_URL%', raffleUrl).replaceAll('%PRODUCT%', game).replaceAll('%KEY%', key);
+String _setupMailText(
+  String mailPreset,
+  String raffleName,
+  String raffleUrl,
+  String game,
+  String key,
+  String? platform,
+) {
+  var result = mailPreset
+      .replaceAll('%RAFFLE_NAME%', raffleName)
+      .replaceAll('%RAFFLE_URL%', raffleUrl)
+      .replaceAll('%PRODUCT%', game)
+      .replaceAll('%KEY%', key);
   if (platform?.isNotEmpty == true) {
     result = result.replaceAll('%PLATFORM%', platform!);
   }

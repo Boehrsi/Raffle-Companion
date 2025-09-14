@@ -3,12 +3,7 @@ import 'dart:io';
 
 import '../utils/files.dart';
 
-enum Action {
-  start,
-  add,
-  edit,
-  delete,
-}
+enum Action { start, add, edit, delete }
 
 class Logger<T> {
   final _logFile = File(RaffleFile.log.getFilePath());

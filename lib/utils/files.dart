@@ -36,7 +36,8 @@ enum RaffleFile {
 
   String getFilePath() => p.join(directory.getPath(), name);
 
-  String getDefaultFilePath() => p.join(RaffleDirectory.defaults.getPath(), name);
+  String getDefaultFilePath() =>
+      p.join(RaffleDirectory.defaults.getPath(), name);
 
   Future<void> setup() async {
     final targetDirectoryPath = directory.getPath();
@@ -73,7 +74,10 @@ Future<void> setupData() async {
 }
 
 Future<void> prepareFiles() async {
-  await Future.forEach(RaffleFile.values, (RaffleFile raffleFile) async => await raffleFile.setup());
+  await Future.forEach(
+    RaffleFile.values,
+    (RaffleFile raffleFile) async => await raffleFile.setup(),
+  );
 }
 
 Future<String> getBasePath() async {

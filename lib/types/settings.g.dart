@@ -7,11 +7,11 @@ part of 'settings.dart';
 // **************************************************************************
 
 Settings _$SettingsFromJson(Map<String, dynamic> json) => Settings(
-      defaultPlatform: json['defaultPlatform'] as String,
-      defaultMailPreset: json['defaultMailPreset'] as String,
-    );
+  defaultPlatform: json['defaultPlatform'] as String,
+  defaultMailPreset: json['defaultMailPreset'] as String,
+);
 
 Map<String, dynamic> _$SettingsToJson(Settings instance) => <String, dynamic>{
-      'defaultPlatform': instance.defaultPlatform,
-      'defaultMailPreset': instance.defaultMailPreset,
-    };
+  'defaultPlatform': instance.defaultPlatform,
+  'defaultMailPreset': instance.defaultMailPreset,
+};

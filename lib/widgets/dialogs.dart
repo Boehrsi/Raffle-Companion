@@ -3,7 +3,11 @@ import 'package:fluent_ui/fluent_ui.dart';
 
 import '../l10n/locale_keys.g.dart';
 
-Future<bool?> showInfoDialog({required BuildContext context, required String title, required String content}) async {
+Future<bool?> showInfoDialog({
+  required BuildContext context,
+  required String title,
+  required String content,
+}) async {
   return showDialog<bool>(
     context: context,
     builder: (BuildContext context) {
@@ -23,7 +27,12 @@ Future<bool?> showInfoDialog({required BuildContext context, required String tit
   );
 }
 
-Future<bool?> showConfirmDialog({required BuildContext context, required String title, required String content, required String positiveText}) async {
+Future<bool?> showConfirmDialog({
+  required BuildContext context,
+  required String title,
+  required String content,
+  required String positiveText,
+}) async {
   return showDialog<bool>(
     context: context,
     builder: (BuildContext context) {
@@ -49,7 +58,10 @@ Future<bool?> showConfirmDialog({required BuildContext context, required String 
   );
 }
 
-Future<void> showErrorDialog({required BuildContext context, required String error}) async {
+Future<void> showErrorDialog({
+  required BuildContext context,
+  required String error,
+}) async {
   return showDialog<void>(
     context: context,
     builder: (BuildContext context) {
@@ -84,17 +96,20 @@ class FormDialog extends StatelessWidget {
   final Widget child;
   final List<Widget> actions;
 
-  const FormDialog({super.key, required this.formKey, required this.title, required this.child, required this.actions});
+  const FormDialog({
+    super.key,
+    required this.formKey,
+    required this.title,
+    required this.child,
+    required this.actions,
+  });
 
   @override
   Widget build(BuildContext context) {
     return _SizedDialog(
       title: title,
       actions: actions,
-      child: Form(
-        key: formKey,
-        child: child,
-      ),
+      child: Form(key: formKey, child: child),
     );
   }
 }

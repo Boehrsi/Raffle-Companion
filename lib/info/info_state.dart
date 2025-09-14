@@ -7,5 +7,9 @@ class InfoSuccess extends InfoState {
   final String log;
   final String version;
 
-  InfoSuccess({required this.filesPath, required this.log, required this.version});
+  InfoSuccess({
+    required this.filesPath,
+    required this.log,
+    required this.version,
+  });
 }
