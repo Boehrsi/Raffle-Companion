@@ -15,7 +15,7 @@ dependencies:
   easy_localization: ^3.0.8
   fluent_ui: ^4.13.0
   flutter_bloc: ^9.1.1
-  json_annotation: ^4.9.0
+  json_annotation: ^4.10.0
   package_info_plus: ^9.0.0
   path: ^1.9.1
   path_provider: ^2.1.5
