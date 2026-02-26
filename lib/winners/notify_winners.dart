@@ -58,9 +58,9 @@ class _NotifyWinnersState extends State<NotifyWinners> {
       builder: (BuildContext context, state) {
         if (state is SettingsSuccess && state.mailPresetList.isNotEmpty) {
           return NavigationView(
-            appBar: const NavigationAppBar(
-              title: AppBarTitle(text: kTextEmpty),
-              actions: AppBarActions(),
+            titleBar: const AppBar(
+              text: kTextEmpty,
+              showBack: true,
             ),
             content: ScaffoldPage(
               header: PageHeader(

@@ -51,17 +51,18 @@ class _RootState extends State<Root> with WindowListener {
   Widget build(BuildContext context) {
     return BlocBuilder<RootBloc, RootState>(
       builder: (context, state) {
+        final paneHeaderTextStyle = NavigationPaneTheme.of(context).itemHeaderTextStyle;
+
         return NavigationView(
-          appBar: const NavigationAppBar(
-            title: AppBarTitle(text: kTextAppName),
-            actions: AppBarActions(),
-            automaticallyImplyLeading: false,
-          ),
+          transitionBuilder: (child, animation) => DrillInPageTransition(animation: animation, child: child),
+          titleBar: AppBar(text: kTextAppName),
           pane: NavigationPane(
+            header: SizedBox.shrink(),
+            displayMode: PaneDisplayMode.expanded,
             selected: _pageIndex,
             onChanged: (page) => setState(() => _pageIndex = page),
             items: [
-              PaneItemHeader(header: Text(LocaleKeys.entries.tr())),
+              PaneItemWidgetAdapter(child: Text(LocaleKeys.entries.tr(), style: paneHeaderTextStyle)),
               PaneItem(
                 icon: const Icon(FluentIcons.list),
                 title: Text(LocaleKeys.available.tr()),
@@ -73,14 +74,14 @@ class _RootState extends State<Root> with WindowListener {
                 body: const EntryList(showUsed: true),
               ),
               PaneItemSeparator(),
-              PaneItemHeader(header: Text(LocaleKeys.tools.tr())),
+              PaneItemWidgetAdapter(child: Text(LocaleKeys.tools.tr(), style: paneHeaderTextStyle)),
               PaneItem(
                 icon: const Icon(FluentIcons.date_time),
                 title: Text(LocaleKeys.date.tr()),
                 body: const DateTools(),
               ),
               PaneItemSeparator(),
-              PaneItemHeader(header: Text(LocaleKeys.settings.tr())),
+              PaneItemWidgetAdapter(child: Text(LocaleKeys.settings.tr(), style: paneHeaderTextStyle)),
               PaneItem(
                 icon: const Icon(FluentIcons.settings),
                 title: Text(LocaleKeys.platforms.tr()),
