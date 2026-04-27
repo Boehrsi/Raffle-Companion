@@ -16,7 +16,7 @@ dependencies:
   fluent_ui: ^4.15.1
   flutter_bloc: ^9.1.1
   json_annotation: ^4.11.0
-  package_info_plus: ^10.0.0
+  package_info_plus: ^10.1.0
   path: ^1.9.1
   path_provider: ^2.1.5
   sprintf: ^7.0.0
